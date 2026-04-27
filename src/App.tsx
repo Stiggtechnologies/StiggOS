@@ -15,6 +15,15 @@ import { RoutePlanning } from './pages/RoutePlanning'
 import { Compliance } from './pages/Compliance'
 import { Communications } from './pages/Communications'
 import { Settings } from './pages/Settings'
+// Phase 2 modules
+import HRWorkforce from './pages/HRWorkforce'
+import FinancialDashboard from './pages/FinancialDashboard'
+import NotificationsAlerts from './pages/NotificationsAlerts'
+import ReportingEngine from './pages/ReportingEngine'
+import AuditLog from './pages/AuditLog'
+import EquipmentAssets from './pages/EquipmentAssets'
+import SalesPipeline from './pages/SalesPipeline'
+import AutomationRules from './pages/AutomationRules'
 
 function App() {
   return (
@@ -35,6 +44,15 @@ function App() {
         <Route path="/compliance" element={<Compliance />} />
         <Route path="/communications" element={<Communications />} />
         <Route path="/settings" element={<Settings />} />
+        {/* Phase 2 */}
+        <Route path="/hr-workforce" element={<HRWorkforce />} />
+        <Route path="/financials" element={<FinancialDashboard />} />
+        <Route path="/notifications" element={<NotificationsAlerts />} />
+        <Route path="/reports" element={<ReportingEngine />} />
+        <Route path="/audit-log" element={<AuditLog />} />
+        <Route path="/equipment" element={<EquipmentAssets />} />
+        <Route path="/sales-pipeline" element={<SalesPipeline />} />
+        <Route path="/automation" element={<AutomationRules />} />
       </Routes>
     </Layout>
   )
