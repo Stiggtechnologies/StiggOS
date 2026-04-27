@@ -4,13 +4,13 @@ import { Target, Users, DollarSign, Phone, Mail, Calendar, Plus, ArrowRight, Tre
 type PipeTab = 'pipeline' | 'leads' | 'activities'
 
 const pipelineStages = [
-  { name: 'New Lead', count: 4, value: 30500, color: 'bg-slate-500', probability: 10 },
-  { name: 'Contacted', count: 2, value: 42000, color: 'bg-blue-500', probability: 25 },
-  { name: 'Qualified', count: 2, value: 65000, color: 'bg-cyan-500', probability: 50 },
-  { name: 'Proposal Sent', count: 2, value: 38000, color: 'bg-purple-500', probability: 70 },
+  { name: 'New Lead', count: 6, value: 45500, color: 'bg-slate-500', probability: 10 },
+  { name: 'Contacted', count: 4, value: 56000, color: 'bg-blue-500', probability: 25 },
+  { name: 'Qualified', count: 5, value: 81000, color: 'bg-cyan-500', probability: 50 },
+  { name: 'Proposal Sent', count: 4, value: 53000, color: 'bg-purple-500', probability: 70 },
   { name: 'Negotiation', count: 1, value: 48000, color: 'bg-yellow-500', probability: 85 },
   { name: 'Won', count: 3, value: 127500, color: 'bg-green-500', probability: 100 },
-  { name: 'Lost', count: 1, value: 18000, color: 'bg-red-500', probability: 0 },
+  { name: 'Lost', count: 2, value: 28000, color: 'bg-red-500', probability: 0 },
 ]
 
 interface Lead {
@@ -46,14 +46,28 @@ const leads: Lead[] = [
   { id: '9', company: 'Realstar Management', contact: 'Chris Johnson', email: 'c.johnson@realstar.ca', phone: '403-555-0178', source: 'cold_call', properties: 2, value: 8000, stage: 'New Lead', nextFollowUp: '2026-04-30', assignee: '', notes: 'Cold outreach. Left voicemail.', industry: 'Real Estate', segment: 'SMB' },
   { id: '10', company: 'Dream Unlimited', contact: 'Patricia Lee', email: 'p.lee@dream.ca', phone: '403-555-0256', source: 'event', properties: 5, value: 18000, stage: 'Lost', assignee: 'Orville Davis', nextFollowUp: '', notes: 'Went with competitor. Price was main concern.', industry: 'Real Estate', segment: 'Enterprise' },
 
-  // Imported from ClickUp CRM
+  // Imported from ClickUp CRM — 12 leads from Accounts & Opportunities
   { id: 'cu-1', company: 'CP Services', contact: 'Lisa Swenson', email: '', phone: '', source: 'clickup_import', properties: 1, value: 2000, stage: 'Proposal Sent', nextFollowUp: '2026-05-01', assignee: 'Orville Davis', notes: 'Arrange meeting with Conor for facility walk down and install assessment.', industry: 'Engineering', segment: 'Enterprise', companyRevenue: '$5B', employeeCount: '101+', importedFrom: 'ClickUp CRM' },
   { id: 'cu-2', company: 'Snow Clearing Contract', contact: '', email: '', phone: '', source: 'clickup_import', properties: 1, value: 2000, stage: 'New Lead', nextFollowUp: '2026-05-02', assignee: '', notes: 'New prospect — snow clearing services needed. Property photos uploaded. Needs contact info and site assessment.', industry: 'Property Management', segment: 'SMB', importedFrom: 'ClickUp CRM' },
+  { id: 'cu-3', company: 'Client 10', contact: 'Clarissa Lee', email: '', phone: '', source: 'clickup_import', properties: 4, value: 7000, stage: 'New Lead', nextFollowUp: '2026-05-03', assignee: '', notes: 'Follow up with Clarissa. 200-unit account, high priority prospect.', industry: 'Hospitality', segment: 'Enterprise', companyRevenue: '$11B', employeeCount: '101+', importedFrom: 'ClickUp CRM' },
+  { id: 'cu-4', company: 'Client 11', contact: 'Juanita Holmes', email: '', phone: '', source: 'clickup_import', properties: 5, value: 5000, stage: 'New Lead', nextFollowUp: '2026-05-04', assignee: '', notes: 'Second follow up needed. 250-unit account in hospitality sector.', industry: 'Hospitality', segment: 'Mid-Market', companyRevenue: '$148M', employeeCount: '26-100', importedFrom: 'ClickUp CRM' },
+  { id: 'cu-5', company: 'Client 9', contact: 'Asia Paltrow', email: '', phone: '', source: 'clickup_import', properties: 3, value: 5000, stage: 'Contacted', nextFollowUp: '2026-05-05', assignee: 'Orville Davis', notes: 'Check in call scheduled. 150-unit engineering account, high value prospect.', industry: 'Engineering', segment: 'Enterprise', companyRevenue: '$49B', employeeCount: '101+', importedFrom: 'ClickUp CRM' },
+  { id: 'cu-6', company: 'Client 3', contact: 'Jessie Thompson', email: '', phone: '', source: 'clickup_import', properties: 7, value: 5000, stage: 'Proposal Sent', nextFollowUp: '2026-05-06', assignee: 'Orville Davis', notes: 'Send proposal. 330-unit retail account, normal priority.', industry: 'Retail', segment: 'Enterprise', companyRevenue: '$1B', employeeCount: '101+', importedFrom: 'ClickUp CRM' },
+  { id: 'cu-7', company: 'Client 8', contact: 'Jenna Lee', email: 'jenna@example.com', phone: '', source: 'clickup_import', properties: 4, value: 5000, stage: 'Qualified', nextFollowUp: '2026-05-07', assignee: 'Orville Davis', notes: 'Check in call pending. VP of Operations contact. 200-unit retail account, bank wire payment.', industry: 'Retail', segment: 'SMB', companyRevenue: '$5M', employeeCount: '0-25', importedFrom: 'ClickUp CRM' },
+  { id: 'cu-8', company: 'Client 7', contact: 'Rick James', email: 'rick@example.com', phone: '', source: 'clickup_import', properties: 7, value: 10000, stage: 'Qualified', nextFollowUp: '2026-05-08', assignee: 'Orville Davis', notes: 'Check in needed. 350-unit retail account, credit card payment, unlimited plan.', industry: 'Retail', segment: 'Mid-Market', companyRevenue: '$50M', employeeCount: '0-25', importedFrom: 'ClickUp CRM' },
+  { id: 'cu-9', company: 'Client 2', contact: 'Lawrence Beck', email: 'lawrence@example.com', phone: '', source: 'clickup_import', properties: 8, value: 10000, stage: 'Lost', nextFollowUp: '', assignee: '', notes: 'Lost — send promo email for re-engagement. 400-unit hospitality account, enterprise segment. Payment request sent.', industry: 'Hospitality', segment: 'Enterprise', companyRevenue: '$8B', employeeCount: '101+', importedFrom: 'ClickUp CRM' },
+  { id: 'cu-10', company: 'Client 5', contact: 'Mark Bernard', email: 'mark@example.com', phone: '', source: 'clickup_import', properties: 5, value: 9000, stage: 'Contacted', nextFollowUp: '2026-05-09', assignee: 'Orville Davis', notes: 'Doing demo on 11/2. 234-unit engineering account, quote sent, bank wire payment.', industry: 'Engineering', segment: 'Enterprise', companyRevenue: '$20M', employeeCount: '101+', importedFrom: 'ClickUp CRM' },
+  { id: 'cu-11', company: 'Client 4', contact: 'Melanie Morris', email: 'melanie@example.com', phone: '', source: 'clickup_import', properties: 10, value: 10000, stage: 'Proposal Sent', nextFollowUp: '2026-05-10', assignee: '', notes: 'Send proposal. 500-unit retail account, low priority. Payment request sent, credit card.', industry: 'Retail', segment: 'Enterprise', companyRevenue: '$100M', employeeCount: '26-100', importedFrom: 'ClickUp CRM' },
+  { id: 'cu-12', company: 'Client 6', contact: 'Luis Bernard', email: 'luis@example.com', phone: '', source: 'clickup_import', properties: 2, value: 1000, stage: 'Qualified', nextFollowUp: '2026-05-11', assignee: 'Orville Davis', notes: 'Setting up demo account for call 11/1. 100-unit retail account, urgent priority. Enterprise plan.', industry: 'Retail', segment: 'Mid-Market', companyRevenue: '$80M', employeeCount: '101+', importedFrom: 'ClickUp CRM' },
 ]
 
 const activities = [
-  { lead: 'CP Services', type: 'import', description: 'Lead imported from ClickUp CRM. Original status: Proposal. Facility walkdown pending with Conor.', date: '2026-04-27', outcome: 'Imported — needs follow-up scheduling' },
-  { lead: 'Snow Clearing Contract', type: 'import', description: 'Lead imported from ClickUp CRM. Property photos on file. No contact details yet — requires outreach.', date: '2026-04-27', outcome: 'Imported — needs contact info' },
+  { lead: 'ClickUp CRM Import', type: 'import', description: 'Bulk import: 12 commercial leads imported from ClickUp CRM Accounts & Opportunities. Industries: Engineering, Retail, Hospitality, Property Management. Pipeline stages mapped to Stigg OS.', date: '2026-04-27', outcome: 'All 12 leads imported and mapped' },
+  { lead: 'CP Services', type: 'import', description: 'Lead imported from ClickUp CRM. Original status: Proposal. Facility walkdown pending with Conor. $5B revenue, Engineering sector.', date: '2026-04-27', outcome: 'Imported — needs follow-up scheduling' },
+  { lead: 'Client 10', type: 'import', description: 'Imported from ClickUp CRM. Qualified Prospect. $11B hospitality company, 200-unit account. Contact: Clarissa Lee.', date: '2026-04-27', outcome: 'Imported — follow up with Clarissa' },
+  { lead: 'Client 9', type: 'import', description: 'Imported from ClickUp CRM. Intro Call stage. $49B engineering company, 150-unit account. Contact: Asia Paltrow.', date: '2026-04-27', outcome: 'Imported — check in call scheduled' },
+  { lead: 'Client 6', type: 'import', description: 'Imported from ClickUp CRM. Demo stage, URGENT priority. $80M retail company. Setting up demo account for call. Contact: Luis Bernard.', date: '2026-04-27', outcome: 'Imported — urgent demo setup needed' },
+  { lead: 'Client 2', type: 'import', description: 'Imported from ClickUp CRM. Closed/Lost. $8B hospitality company, 400-unit enterprise account. Contact: Lawrence Beck.', date: '2026-04-27', outcome: 'Imported as Lost — send promo for re-engagement' },
   { lead: 'Boardwalk REIT', type: 'meeting', description: 'In-person meeting to finalize contract terms. Discussed Premium tier add-ons.', date: '2026-04-25', outcome: 'Positive — verbal agreement on Enhanced tier' },
   { lead: 'Brookfield Properties', type: 'proposal', description: 'Sent formal proposal: Enhanced tier, 12 properties, $36K/mo. PDF + pricing breakdown.', date: '2026-04-22', outcome: 'Awaiting response' },
   { lead: 'Killam Apartment REIT', type: 'site_visit', description: 'Toured 3 of 5 properties with David Morrison. Assessed security needs, lighting, access points.', date: '2026-04-20', outcome: 'Strong interest — wants proposal by May 5' },
