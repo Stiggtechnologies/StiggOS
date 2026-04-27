@@ -19,6 +19,14 @@ import {
   Menu,
   X,
   LogOut,
+  Users,
+  DollarSign,
+  Bell,
+  Printer,
+  ScrollText,
+  Wrench,
+  Target,
+  Zap,
 } from 'lucide-react'
 
 interface LayoutProps {
@@ -44,6 +52,16 @@ export function Layout({ children }: LayoutProps) {
     { path: '/route-planning', icon: Route, label: 'Route Planning' },
     { path: '/compliance', icon: ClipboardCheck, label: 'Compliance' },
     { path: '/communications', icon: MessageSquare, label: 'Communications' },
+    { type: 'divider', label: 'Phase 2' },
+    { path: '/hr-workforce', icon: Users, label: 'HR & Workforce' },
+    { path: '/financials', icon: DollarSign, label: 'Financials' },
+    { path: '/notifications', icon: Bell, label: 'Notifications' },
+    { path: '/reports', icon: Printer, label: 'Reporting Engine' },
+    { path: '/audit-log', icon: ScrollText, label: 'Audit Log' },
+    { path: '/equipment', icon: Wrench, label: 'Equipment & Assets' },
+    { path: '/sales-pipeline', icon: Target, label: 'Sales Pipeline' },
+    { path: '/automation', icon: Zap, label: 'Automation Rules' },
+    { type: 'divider', label: 'System' },
     { path: '/settings', icon: Settings, label: 'Settings' },
   ]
 
@@ -73,14 +91,24 @@ export function Layout({ children }: LayoutProps) {
 
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto p-2 space-y-1">
-          {menuItems.map((item) => {
-            const Icon = item.icon
+          {menuItems.map((item, idx) => {
+            if ((item as any).type === 'divider') {
+              return (
+                <div key={`divider-${idx}`} className="pt-3 pb-1 px-3">
+                  {sidebarOpen && (
+                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{item.label}</p>
+                  )}
+                  {!sidebarOpen && <div className="border-t border-default" />}
+                </div>
+              )
+            }
+            const Icon = item.icon!
             return (
               <Link
                 key={item.path}
-                to={item.path}
+                to={item.path!}
                 className={`flex items-center gap-3 px-3 py-2 rounded transition-colors ${
-                  isActive(item.path)
+                  isActive(item.path!)
                     ? 'bg-accent text-secondary font-semibold'
                     : 'text-secondary hover:bg-card'
                 }`}
