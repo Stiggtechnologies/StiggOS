@@ -7,7 +7,7 @@ import {
   Wifi, WifiOff, Sun, Moon, ChevronDown, X, ExternalLink, Play, Pause
 } from 'lucide-react'
 
-// âââ TYPES ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── TYPES ──────────────────────────────────────────────────────────────────
 
 interface AIDetectionEvent {
   id: string
@@ -77,7 +77,7 @@ interface DailyMetrics {
   responseTime: number
 }
 
-// âââ DEMO DATA ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── DEMO DATA ──────────────────────────────────────────────────────────────
 
 const PROPERTIES = [
   { id: 'nv-5', name: 'Northview Tower 5', address: '10205 101 St NW', cameras: 12, guards: 2 },
@@ -86,14 +86,14 @@ const PROPERTIES = [
 ]
 
 const AI_DETECTIONS: AIDetectionEvent[] = [
-  { id: 'det-1', timestamp: '2026-05-01T02:47:00', camera: 'Parking Cam 4', type: 'person', confidence: 94.2, zone: 'Parking Zone B', status: 'resolved', details: 'Individual detected loitering >5 min. Guard dispatched â tenant guest verified.', severity: 'high' },
+  { id: 'det-1', timestamp: '2026-05-01T02:47:00', camera: 'Parking Cam 4', type: 'person', confidence: 94.2, zone: 'Parking Zone B', status: 'resolved', details: 'Individual detected loitering >5 min. Guard dispatched — tenant guest verified.', severity: 'high' },
   { id: 'det-2', timestamp: '2026-05-01T02:31:00', camera: 'Lobby Cam 1', type: 'person', confidence: 98.7, zone: 'Main Entrance', status: 'resolved', details: 'Authorized tenant entry. Face matched to resident database.', severity: 'info' },
-  { id: 'det-3', timestamp: '2026-05-01T01:52:00', camera: 'Perimeter Cam N', type: 'zone_breach', confidence: 91.5, zone: 'North Fence Line', status: 'resolved', details: 'Motion at fence line â animal (coyote) confirmed via AI classification.', severity: 'low' },
-  { id: 'det-4', timestamp: '2026-05-01T01:30:00', camera: 'Parking Cam 2', type: 'plate_read', confidence: 99.1, zone: 'Parking Entry', status: 'active', details: 'Plate ABC-1234 (Black SUV) â NOT in tenant database. Flagged for review.', severity: 'medium' },
+  { id: 'det-3', timestamp: '2026-05-01T01:52:00', camera: 'Perimeter Cam N', type: 'zone_breach', confidence: 91.5, zone: 'North Fence Line', status: 'resolved', details: 'Motion at fence line — animal (coyote) confirmed via AI classification.', severity: 'low' },
+  { id: 'det-4', timestamp: '2026-05-01T01:30:00', camera: 'Parking Cam 2', type: 'plate_read', confidence: 99.1, zone: 'Parking Entry', status: 'active', details: 'Plate ABC-1234 (Black SUV) — NOT in tenant database. Flagged for review.', severity: 'medium' },
   { id: 'det-5', timestamp: '2026-05-01T00:45:00', camera: 'Loading Dock', type: 'vehicle', confidence: 96.8, zone: 'Service Area', status: 'dismissed', details: 'Delivery vehicle detected at loading dock. Scheduled delivery confirmed.', severity: 'info' },
-  { id: 'det-6', timestamp: '2026-04-30T23:15:00', camera: 'Parking Cam 3', type: 'loitering', confidence: 88.3, zone: 'Parking Zone A', status: 'resolved', details: 'Person in Zone A >3 min threshold. Guard responded â maintenance worker on authorized overtime.', severity: 'medium' },
+  { id: 'det-6', timestamp: '2026-04-30T23:15:00', camera: 'Parking Cam 3', type: 'loitering', confidence: 88.3, zone: 'Parking Zone A', status: 'resolved', details: 'Person in Zone A >3 min threshold. Guard responded — maintenance worker on authorized overtime.', severity: 'medium' },
   { id: 'det-7', timestamp: '2026-04-30T22:30:00', camera: 'Stairwell B', type: 'person', confidence: 95.1, zone: 'Stairwell Access', status: 'resolved', details: 'Unauthorized access attempt to mechanical room. Door remained locked. Guard alerted.', severity: 'high' },
-  { id: 'det-8', timestamp: '2026-04-30T21:08:00', camera: 'Parking Cam 2', type: 'plate_read', confidence: 99.4, zone: 'Parking Entry', status: 'resolved', details: 'Plate XYZ-5678 (White Van) â tenant registered vehicle confirmed.', severity: 'info' },
+  { id: 'det-8', timestamp: '2026-04-30T21:08:00', camera: 'Parking Cam 2', type: 'plate_read', confidence: 99.4, zone: 'Parking Entry', status: 'resolved', details: 'Plate XYZ-5678 (White Van) — tenant registered vehicle confirmed.', severity: 'info' },
 ]
 
 const PATROL_CHECKPOINTS: PatrolCheckpoint[] = [
@@ -112,9 +112,9 @@ const PATROL_CHECKPOINTS: PatrolCheckpoint[] = [
 ]
 
 const INCIDENTS: IncidentRecord[] = [
-  { id: 'inc-1', timestamp: '2026-05-01T02:47:00', type: 'Suspicious Person', location: 'Parking Zone B', severity: 'high', status: 'resolved', assignedGuard: 'J. Smith', responseTime: '2m 14s', description: 'Unknown individual loitering in parking zone. Guard dispatched â verified as tenant guest.', hasVideo: true, hasSnapshot: true },
+  { id: 'inc-1', timestamp: '2026-05-01T02:47:00', type: 'Suspicious Person', location: 'Parking Zone B', severity: 'high', status: 'resolved', assignedGuard: 'J. Smith', responseTime: '2m 14s', description: 'Unknown individual loitering in parking zone. Guard dispatched — verified as tenant guest.', hasVideo: true, hasSnapshot: true },
   { id: 'inc-2', timestamp: '2026-04-30T22:30:00', type: 'Unauthorized Access Attempt', location: 'Stairwell B', severity: 'high', status: 'closed', assignedGuard: 'J. Smith', responseTime: '1m 48s', description: 'Attempted access to mechanical room via stairwell. Door secured. Individual could not be located.', hasVideo: true, hasSnapshot: true },
-  { id: 'inc-3', timestamp: '2026-04-29T14:20:00', type: 'Maintenance Issue', location: 'Parking Level 1', severity: 'low', status: 'open', assignedGuard: 'K. Osei', responseTime: 'â', description: 'Broken light fixture in parking level 1, section C. Reported to property management.', hasVideo: false, hasSnapshot: true },
+  { id: 'inc-3', timestamp: '2026-04-29T14:20:00', type: 'Maintenance Issue', location: 'Parking Level 1', severity: 'low', status: 'open', assignedGuard: 'K. Osei', responseTime: '—', description: 'Broken light fixture in parking level 1, section C. Reported to property management.', hasVideo: false, hasSnapshot: true },
 ]
 
 const GUARD_ACTIVITY: GuardActivity[] = [
@@ -148,7 +148,7 @@ const FLAGGED_VEHICLES = [
   { plate: 'DEF-9012', type: 'Silver Sedan', time: '4:15 AM', status: 'Flagged', inDatabase: false },
 ]
 
-// âââ HELPER COMPONENTS ââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── HELPER COMPONENTS ──────────────────────────────────────────────────────
 
 function MiniBarChart({ data, height = 48, color = '#3b82f6' }: { data: number[], height?: number, color?: string }) {
   const max = Math.max(...data, 1)
@@ -277,7 +277,7 @@ function formatDateTime(timestamp: string) {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
 }
 
-// âââ MAIN COMPONENT âââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ─── MAIN COMPONENT ─────────────────────────────────────────────────────────
 
 export function ClientPortal() {
   const [selectedProperty, setSelectedProperty] = useState('nv-5')
@@ -314,7 +314,7 @@ export function ClientPortal() {
 
   return (
     <div className="space-y-5">
-      {/* âââ HEADER BAR âââ */}
+      {/* ═══ HEADER BAR ═══ */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
@@ -323,7 +323,7 @@ export function ClientPortal() {
             </div>
             <div>
               <h1 className="text-2xl font-bold text-primary">Security Command Portal</h1>
-              <p className="text-secondary text-sm">Northview REIT â AI-Powered Monitoring & Reporting</p>
+              <p className="text-secondary text-sm">Northview REIT — AI-Powered Monitoring & Reporting</p>
             </div>
           </div>
         </div>
@@ -353,7 +353,7 @@ export function ClientPortal() {
         </div>
       </div>
 
-      {/* âââ EXECUTIVE KPI STRIP âââ */}
+      {/* ═══ EXECUTIVE KPI STRIP ═══ */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         {[
           { label: 'AI Detections', value: totalDetections24h.toString(), sub: 'Last 24h', icon: Zap, color: 'text-blue-400', bg: 'bg-blue-500/10', trend: '+12%', trendUp: true, sparkData: DAILY_METRICS.map(m => m.detections) },
@@ -361,7 +361,7 @@ export function ClientPortal() {
           { label: 'Patrol Compliance', value: `${patrolComplianceRate}%`, sub: `${completedCheckpoints}/${totalCheckpoints} checkpoints`, icon: CheckCircle, color: 'text-green-400', bg: 'bg-green-500/10', trend: '+2%', trendUp: true, sparkData: [95, 100, 100, 98, 100, 100, patrolComplianceRate] },
           { label: 'Avg Response', value: avgResponseTime, sub: 'Guard dispatch', icon: Clock, color: 'text-purple-400', bg: 'bg-purple-500/10', trend: '-18%', trendUp: false, sparkData: DAILY_METRICS.map(m => m.responseTime || 0) },
           { label: 'Cameras Online', value: `${onlineCameras}/${CAMERAS.length}`, sub: 'All systems operational', icon: Camera, color: 'text-cyan-400', bg: 'bg-cyan-500/10', trend: '100%', trendUp: true, sparkData: [8, 8, 8, 7, 8, 8, 8] },
-          { label: 'Guards On Duty', value: GUARD_ACTIVITY.filter(g => g.status !== 'off_duty').length.toString(), sub: 'GPS verified', icon: Users, color: 'text-emerald-400', bg: 'bg-emerald-500/10', trend: 'â', trendUp: true, sparkData: [1, 1, 2, 1, 1, 1, 1] },
+          { label: 'Guards On Duty', value: GUARD_ACTIVITY.filter(g => g.status !== 'off_duty').length.toString(), sub: 'GPS verified', icon: Users, color: 'text-emerald-400', bg: 'bg-emerald-500/10', trend: '—', trendUp: true, sparkData: [1, 1, 2, 1, 1, 1, 1] },
         ].map((kpi, idx) => (
           <div key={idx} className="bg-card rounded-xl p-4 border border-default hover:border-slate-600 transition-colors group">
             <div className="flex items-start justify-between mb-2">
@@ -369,7 +369,7 @@ export function ClientPortal() {
                 <kpi.icon size={16} className={kpi.color} />
               </div>
               <div className={`flex items-center gap-1 text-[10px] font-semibold ${kpi.trendUp ? (kpi.label === 'Avg Response' || kpi.label === 'Active Incidents' ? 'text-green-400' : 'text-green-400') : (kpi.label === 'Avg Response' || kpi.label === 'Active Incidents' ? 'text-green-400' : 'text-red-400')}`}>
-                {kpi.trend !== 'â' && (kpi.trendUp ? <ArrowUpRight size={10} /> : <ArrowDownRight size={10} />)}
+                {kpi.trend !== '—' && (kpi.trendUp ? <ArrowUpRight size={10} /> : <ArrowDownRight size={10} />)}
                 {kpi.trend}
               </div>
             </div>
@@ -382,7 +382,7 @@ export function ClientPortal() {
         ))}
       </div>
 
-      {/* âââ TAB NAVIGATION âââ */}
+      {/* ═══ TAB NAVIGATION ═══ */}
       <div className="flex items-center gap-1 bg-secondary/30 rounded-lg p-1 border border-default overflow-x-auto">
         {[
           { key: 'overview', label: 'Overview', icon: BarChart3 },
@@ -400,9 +400,9 @@ export function ClientPortal() {
         ))}
       </div>
 
-      {/* âââ TAB CONTENT âââ */}
+      {/* ═══ TAB CONTENT ═══ */}
 
-      {/* âââ OVERVIEW TAB âââ */}
+      {/* ─── OVERVIEW TAB ─── */}
       {activeTab === 'overview' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {/* Left column: Live AI Feed + Patrol Progress */}
@@ -511,13 +511,13 @@ export function ClientPortal() {
                   <p className="text-2xl font-bold text-primary">{completedCheckpoints}/{totalCheckpoints}</p>
                   <p className="text-secondary text-xs">Checkpoints completed</p>
                   <p className="text-green-400 text-xs mt-1 font-medium">All GPS verified</p>
-                  <p className="text-secondary text-[10px] mt-0.5">Next: {PATROL_CHECKPOINTS.find(cp => cp.status === 'upcoming')?.name || 'Complete'} at {PATROL_CHECKPOINTS.find(cp => cp.status === 'upcoming')?.scheduledTime || 'â'}</p>
+                  <p className="text-secondary text-[10px] mt-0.5">Next: {PATROL_CHECKPOINTS.find(cp => cp.status === 'upcoming')?.name || 'Complete'} at {PATROL_CHECKPOINTS.find(cp => cp.status === 'upcoming')?.scheduledTime || '—'}</p>
                 </div>
               </div>
               {/* Mini checkpoint timeline */}
               <div className="mt-4 flex items-center gap-0.5">
                 {PATROL_CHECKPOINTS.map(cp => (
-                  <div key={cp.id} className="flex-1" title={`${cp.name} â t{cp.status}`}>
+                  <div key={cp.id} className="flex-1" title={`${cp.name} — ${cp.status}`}>
                     <div className={`h-2 rounded-full ${cp.status === 'completed' ? 'bg-green-500' : cp.status === 'missed' ? 'bg-red-500' : cp.status === 'late' ? 'bg-amber-500' : 'bg-slate-700'}`} />
                   </div>
                 ))}
@@ -554,7 +554,7 @@ export function ClientPortal() {
                     </div>
                     <div className="bg-slate-800/60 rounded-lg p-2.5">
                       <p className="text-[10px] text-slate-500">Shift</p>
-                      <p className="text-xs text-primary font-medium">{guard.shiftStart} â {guard.shiftEnd}</p>
+                      <p className="text-xs text-primary font-medium">{guard.shiftStart} — {guard.shiftEnd}</p>
                     </div>
                     <div className="bg-slate-800/60 rounded-lg p-2.5">
                       <p className="text-[10px] text-slate-500">Avg Response</p>
@@ -606,7 +606,7 @@ export function ClientPortal() {
                   <div key={idx} className="flex items-center justify-between p-2.5 rounded-lg bg-amber-500/5 border border-amber-500/20">
                     <div>
                       <p className="text-primary text-sm font-mono font-bold">{v.plate}</p>
-                      <p className="text-secondary text-[10px]">{v.type} â {v.time}</p>
+                      <p className="text-secondary text-[10px]">{v.type} — {v.time}</p>
                     </div>
                     <span className="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-semibold">{v.status}</span>
                   </div>
@@ -620,7 +620,7 @@ export function ClientPortal() {
         </div>
       )}
 
-      {/* âââ AI DETECTIONS TAB âââ */}
+      {/* ─── AI DETECTIONS TAB ─── */}
       {activeTab === 'detections' && (
         <div className="space-y-4">
           {/* Filters */}
@@ -679,16 +679,16 @@ export function ClientPortal() {
         </div>
       )}
 
-      {/* âââ PATROL LOG TAB âââ */}
+      {/* ─── PATROL LOG TAB ─── */}
       {activeTab === 'patrols' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {/* Checkpoint Timeline */}
           <div className="lg:col-span-2 bg-card rounded-xl border border-default">
             <div className="p-4 border-b border-default">
               <h3 className="font-semibold text-primary text-sm flex items-center gap-2">
-                <MapPin size={16} className="text-green-400" /> Patrol Checkpoint Log â Overnight Shift
+                <MapPin size={16} className="text-green-400" /> Patrol Checkpoint Log — Overnight Shift
               </h3>
-              <p className="text-secondary text-xs mt-1">Guard: J. Smith â Shift: 11:00 PM - 7:00 AM</p>
+              <p className="text-secondary text-xs mt-1">Guard: J. Smith — Shift: 11:00 PM - 7:00 AM</p>
             </div>
             <div className="divide-y divide-slate-800">
               {PATROL_CHECKPOINTS.map((cp, idx) => (
@@ -736,4 +736,212 @@ export function ClientPortal() {
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between text-sm"><span className="text-secondary">Completed</span><span className="text-green-400 font-semibold">{completedCheckpoints}</span></div>
-                <div className="flex justify-between text-sm"><span className="text-secondary">Remaining</span><spanâ6Æ74æÖSÒ'FWB×6ÆFRÓCföçB×6VÖ&öÆB#ç·F÷FÄ6V6·öçG2Ò6ö×ÆWFVD6V6·öçG7ÓÂ÷7ããÂöFcà¢ÆFb6Æ74æÖSÒ&fÆW§W7FgÖ&WGvVVâFWB×6Ò#ãÇ7â6Æ74æÖSÒ'FWB×6V6öæF'#äÖ76VCÂ÷7ããÇ7â6Æ74æÖSÒ'FWBÖw&VVâÓCföçB×6VÖ&öÆB#ãÂ÷7ããÂöFcà¢ÆFb6Æ74æÖSÒ&fÆW§W7FgÖ&WGvVVâFWB×6Ò#ãÇ7â6Æ74æÖSÒ'FWB×6V6öæF'#äÆFSÂ÷7ããÇ7â6Æ74æÖSÒ'FWBÖw&VVâÓCföçB×6VÖ&öÆB#ãÂ÷7ããÂöFcà¢ÆFb6Æ74æÖSÒ&&÷&FW"×B&÷&FW"ÖFVfVÇBBÓ"×BÓ"#à¢ÆFb6Æ74æÖSÒ&fÆW§W7FgÖ&WGvVVâFWB×6Ò#ãÇ7â6Æ74æÖSÒ'FWB×6V6öæF'#äfrFWfFöãÂ÷7ããÇ7â6Æ74æÖSÒ'FWB×&Ö'föçB×6VÖ&öÆB#â³ãBÖãÂ÷7ããÂöFcà¢ÆFb6Æ74æÖSÒ&fÆW§W7FgÖ&WGvVVâFWB×6Ò#ãÇ7â6Æ74æÖSÒ'FWB×6V6öæF'#äu267W&7Â÷7ããÇ7â6Æ74æÖSÒ'FWBÖw&VVâÓCföçB×6VÖ&öÆB#ãSÂ÷7ããÂöFcà¢ÂöFcà¢ÂöFcà¢ÂöFcà ¢ÆFb6Æ74æÖSÒ&&rÖ6&B&÷VæFVB×Â&÷&FW"&÷&FW"ÖFVfVÇBÓR#à¢Æ26Æ74æÖSÒ&föçB×6VÖ&öÆBFWB×&Ö'FWB×6ÒÖ"Ó2#ã3ÔF6ö×Ææ6SÂö3à¢ÄÖæÆæT6'BFF×µ³RÂÂÂÂÂÂrÂÂÂÂÂÂRÂÂG&öÄ6ö×Ææ6U&FU×ÒVvC×³cÒ6öÆ÷#Ò"3#&3SVR"óà¢ÆFb6Æ74æÖSÒ&fÆW§W7FgÖ&WGvVVâ×BÓ"#à¢Ç7â6Æ74æÖSÒ'FWBÕ³ÒFWB×6ÆFRÓS#ã3BvóÂ÷7ãà¢Ç7â6Æ74æÖSÒ'FWBÕ³ÒFWB×6ÆFRÓS#åFöFÂ÷7ãà¢ÂöFcà¢Ç6Æ74æÖSÒ'FWB×2FWB×6V6öæF'×BÓ"#äfW&vS¢Ç7â6Æ74æÖSÒ'FWBÖw&VVâÓCföçB×6VÖ&öÆB#ããrSÂ÷7ããÂ÷à¢ÂöFcà¢ÂöFcà¢ÂöFcà¢Ð ¢²ò¢)H)H)Hä4DTåE2D")H)H)H¢÷Ð¢¶7FfUF"ÓÓÒvæ6FVçG2rbb¢ÆFb6Æ74æÖSÒ'76R×ÓB#à¢ÆFb6Æ74æÖSÒ&&rÖ6&B&÷VæFVB×Â&÷&FW"&÷&FW"ÖFVfVÇBFfFR×FfFR×6ÆFRÓ#à¢´ä4DTåE2æÖæ2Óâ¢ÆFb¶W×¶æ2æGÒ6Æ74æÖSÒ'ÓR÷fW#¦&r×6ÆFRÓó#G&ç6FöâÖ6öÆ÷'2#à¢ÆFb6Æ74æÖSÒ&fÆWFV×2×7F'B§W7FgÖ&WGvVVâÖ"Ó"#à¢ÆFb6Æ74æÖSÒ&fÆWFV×2Ö6VçFW"vÓ"#à¢ÄÆW'EG&ævÆR6¦S×³gÒ6Æ74æÖS×¶æ2ç6WfW&GÓÓÒvvròwFWBÖÖ&W"ÓCr¢æ2ç6WfW&GÓÓÒv7&F6ÂròwFWB×&VBÓCr¢wFWBÖ&ÇVRÓCwÒóà¢ÆB6Æ74æÖSÒ'FWB×&Ö'föçB×6VÖ&öÆB#ç¶æ2çGWÓÂöCà¢Å6WfW&G&FvR6WfW&G×¶æ2ç6WfW&GÒóà¢Ç7â6Æ74æÖS×¶FWBÕ³ÒÓ"ÓãR&÷VæFVBÖgVÆÂföçBÖÖVFVÒG¶æ2ç7FGW2ÓÓÒv÷Vâròv&rÖÖ&W"ÓSó#FWBÖÖ&W"ÓCr¢æ2ç7FGW2ÓÓÒvçfW7FvFærròv&rÖ&ÇVRÓSó#FWBÖ&ÇVRÓCr¢æ2ç7FGW2ÓÓÒw&W6öÇfVBròv&rÖw&VVâÓSó#FWBÖw&VVâÓCr¢v&r×6ÆFRÓSó#FWB×6ÆFRÓCwÖÓà¢¶æ2ç7FGW7Ð¢Â÷7ãà¢ÂöFcà¢Ç7â6Æ74æÖSÒ'FWB×2FWB×6ÆFRÓS#ç¶f÷&ÖDFFUFÖRæ2çFÖW7F×ÓÂ÷7ãà¢ÂöFcà¢Ç6Æ74æÖSÒ'FWB×6V6öæF'FWB×6ÒÖ"Ó2#ç¶æ2æFW67&FöçÓÂ÷à¢ÆFb6Æ74æÖSÒ&fÆWFV×2Ö6VçFW"vÓbFWB×2#à¢Ç7â6Æ74æÖSÒ'FWB×6ÆFRÓCfÆWFV×2Ö6VçFW"vÓ#ãÄÖâ6¦S×³'Òóâ¶æ2æÆö6FöçÓÂ÷7ãà¢Ç7â6Æ74æÖSÒ'FWB×6ÆFRÓCfÆWFV×2Ö6VçFW"vÓ#ãÅW6W"6¦S×³'Òóâ¶æ2æ76væVDwV&GÓÂ÷7ãà¢Ç7â6Æ74æÖSÒ'FWB×6ÆFRÓCfÆWFV×2Ö6VçFW"vÓ#ãÄ6Æö6²6¦S×³'Òóâ&W7öç6S¢Ç7â6Æ74æÖSÒ'FWB×&Ö'föçBÖÖVFVÒ#ç¶æ2ç&W7öç6UFÖWÓÂ÷7ããÂ÷7ãà¢¶æ2æ5fFVòbbÇ7â6Æ74æÖSÒ'FWBÖ&ÇVRÓCfÆWFV×2Ö6VçFW"vÓ7W'6÷"×öçFW"÷fW#§FWBÖ&ÇVRÓ3#ãÅÆ6¦S×³'ÒóâfFVóÂ÷7ãçÐ¢¶æ2æ56æ6÷BbbÇ7â6Æ74æÖSÒ'FWBÖ&ÇVRÓCfÆWFV×2Ö6VçFW"vÓ7W'6÷"×öçFW"÷fW#§FWBÖ&ÇVRÓ3#ãÄ6ÖW&6¦S×³'Òóâ6æ6÷CÂ÷7ãçÐ¢ÂöFcà¢ÂöFcà¢Ð¢ÂöFcà¢ÂöFcà¢Ð ¢²ò¢)H)H)H4ÔU$2D")H)H)H¢÷Ð¢¶7FfUF"ÓÓÒv6ÖW&2rbb¢ÆFb6Æ74æÖSÒ&w&Bw&BÖ6öÇ2ÓÖC¦w&BÖ6öÇ2Ó"Æs¦w&BÖ6öÇ2ÓBvÓB#à¢´4ÔU$2æÖ6ÒÓâ¢ÆFb¶W×¶6ÒæGÒ6Æ74æÖSÒ&&rÖ6&B&÷VæFVB×Â&÷&FW"&÷&FW"ÖFVfVÇBÓB÷fW#¦&÷&FW"×6ÆFRÓcG&ç6FöâÖ6öÆ÷'2w&÷W#à¢²ò¢6ÖW&&WfWrÆ6VöÆFW"¢÷Ð¢ÆFb6Æ74æÖSÒ'rÖgVÆÂÓ#&r×6ÆFRÓ&÷VæFVBÖÆrÖ"Ó2fÆWFV×2Ö6VçFW"§W7FgÖ6VçFW"&÷&FW"&÷&FW"×6ÆFRÓs&VÆFfR÷fW&fÆ÷rÖFFVâ#à¢Ä6ÖW&6¦S×³#Ò6Æ74æÖSÒ'FWB×6ÆFRÓc"óà¢ÆFb6Æ74æÖSÒ&'6öÇWFRF÷Ó"ÆVgBÓ"fÆWFV×2Ö6VçFW"vÓ#à¢Å7FGW4F÷B7FGW3×¶6Òç7FGW7Òóà¢Ç7â6Æ74æÖSÒ'FWBÕ³ÒFWBÖw&VVâÓCföçBÖÖVFVÒWW&66R#ç¶6Òç7FGW7ÓÂ÷7ãà¢ÂöFcà¢¶6ÒæVæ&ÆVBbb¢ÆFb6Æ74æÖSÒ&'6öÇWFRF÷Ó"&vBÓ"#à¢Ç7â6Æ74æÖSÒ'FWBÕ³ÒÓãRÓãR&÷VæFVB&rÖ&ÇVRÓSó3FWBÖ&ÇVRÓCföçB×6VÖ&öÆBfÆWFV×2Ö6VçFW"vÓ#ãÅ¦6¦S×³ÒóâÂ÷7ãà¢ÂöFcà¢Ð¢ÆFb6Æ74æÖSÒ&'6öÇWFR&÷GFöÒÓÆVgBÓ&vBÓ&rÖw&FVçB×Fò×Bg&öÒÖ&Æ6²ócFò×G&ç7&VçBÓ"#à¢Ç6Æ74æÖSÒ'FWB×vFRFWBÕ³ÒföçBÖÖVFVÒ#ç¶6ÒææÖWÓÂ÷à¢ÂöFcà¢ÂöFcà¢Ç6Æ74æÖSÒ'FWB×2FWB×6V6öæF'Ö"Ó"fÆWFV×2Ö6VçFW"vÓ#ãÄÖâ6¦S×³Òóâ¶6ÒæÆö6FöçÓÂ÷à¢ÆFb6Æ74æÖSÒ&w&Bw&BÖ6öÇ2Ó"vÓ"#à¢ÆFb6Æ74æÖSÒ&&r×6ÆFRÓóc&÷VæFVBÓ"#à¢Ç6Æ74æÖSÒ'FWBÕ³ÒFWB×6ÆFRÓS#ã#FFWFV7Föç3Â÷à¢Ç6Æ74æÖSÒ'FWB×6ÒföçBÖ&öÆBFWB×&Ö'#ç¶6ÒæFWFV7Föç3#FÓÂ÷à¢ÂöFcà¢ÆFb6Æ74æÖSÒ&&r×6ÆFRÓóc&÷VæFVBÓ"#à¢Ç6Æ74æÖSÒ'FWBÕ³ÒFWB×6ÆFRÓS#äÆ7BWfVçCÂ÷à¢Ç6Æ74æÖSÒ'FWB×6ÒföçBÖÖVFVÒFWB×&Ö'#ç¶6ÒæÆ7DFWFV7FöçÓÂ÷à¢ÂöFcà¢ÂöFcà¢ÂöFcà¢Ð¢ÂöFcà¢Ð ¢²ò¢)H)H)HdT4ÄU2D")H)H)H¢÷Ð¢¶7FfUF"ÓÓÒwfV6ÆW2rbb¢ÆFb6Æ74æÖSÒ'76R×ÓB#à¢ÆFb6Æ74æÖSÒ&w&Bw&BÖ6öÇ2ÓÖC¦w&BÖ6öÇ2Ó2vÓB#à¢ÆFb6Æ74æÖSÒ&&rÖ6&B&÷VæFVB×Â&÷&FW"&÷&FW"ÖFVfVÇBÓB#à¢Ç6Æ74æÖSÒ'FWB×6V6öæF'FWB×2#åÆFW266ææVB#FÂ÷à¢Ç6Æ74æÖSÒ'FWBÓ'ÂföçBÖ&öÆBFWB×&Ö'×BÓ#ãCsÂ÷à¢ÄÖæ&$6'BFF×µ³Â"ÂbÂ2Â"ÂBÂ%×ÒVvC×³#GÒ6öÆ÷#Ò"36#&cb"óà¢ÂöFcà¢ÆFb6Æ74æÖSÒ&&rÖ6&B&÷VæFVB×Â&÷&FW"&÷&FW"ÖFVfVÇBÓB#à¢Ç6Æ74æÖSÒ'FWB×6V6öæF'FWB×2#äWF÷&¦VCÂ÷à¢Ç6Æ74æÖSÒ'FWBÓ'ÂföçBÖ&öÆBFWBÖw&VVâÓC×BÓ#ãCCÂ÷à¢Ç6Æ74æÖSÒ'FWBÕ³ÒFWB×6V6öæF'×BÓ#äâFVæçBFF&6SÂ÷à¢ÂöFcà¢ÆFb6Æ74æÖSÒ&&rÖ6&B&÷VæFVB×Â&÷&FW"&÷&FW"ÖFVfVÇBÓB#à¢Ç6Æ74æÖSÒ'FWB×6V6öæF'FWB×2#äfÆvvVBòVæ¶æ÷vãÂ÷à¢Ç6Æ74æÖSÒ'FWBÓ'ÂföçBÖ&öÆBFWBÖÖ&W"ÓC×BÓ#ã3Â÷à¢Ç6Æ74æÖSÒ'FWBÕ³ÒFWB×6V6öæF'×BÓ#å&WV&W2&WfWsÂ÷à¢ÂöFcà¢ÂöFcà ¢ÆFb6Æ74æÖSÒ&&rÖ6&B&÷VæFVB×Â&÷&FW"&÷&FW"ÖFVfVÇB#à¢ÆFb6Æ74æÖSÒ'ÓB&÷&FW"Ö"&÷&FW"ÖFVfVÇB#à¢Æ26Æ74æÖSÒ&föçB×6VÖ&öÆBFWB×&Ö'FWB×6Ò#åfV6ÆRÆösÂö3à¢ÂöFcà¢ÆFb6Æ74æÖSÒ&FfFR×FfFR×6ÆFRÓ#à¢´dÄttTEõdT4ÄU2æÖbÂGÓâ¢ÆFb¶W×¶GÒ6Æ74æÖSÒ'ÓBfÆWFV×2Ö6VçFW"§W7FgÖ&WGvVVâ÷fW#¦&r×6ÆFRÓó#G&ç6FöâÖ6öÆ÷'2#à¢ÆFb6Æ74æÖSÒ&fÆWFV×2Ö6VçFW"vÓB#à¢ÆFb6Æ74æÖS×¶rÓÓ&÷VæFVBÖÆrfÆWFV×2Ö6VçFW"§W7FgÖ6VçFW"G·bæäFF&6Ròv&rÖw&VVâÓSór¢v&rÖÖ&W"ÓSówÖÓà¢Ä6"6¦S×³Ò6Æ74æÖS×·bæäFF&6RòwFWBÖw&VVâÓCr¢wFWBÖÖ&W"ÓCwÒóà¢ÂöFcà¢ÆFcà¢Ç6Æ74æÖSÒ'FWB×&Ö'föçBÖÖöæòföçBÖ&öÆBFWBÖÆr#ç·bçÆFWÓÂ÷à¢Ç6Æ74æÖSÒ'FWB×6V6öæF'FWB×2#ç·bçGWÓÂ÷à¢ÂöFcà¢ÂöFcà¢ÆFb6Æ74æÖSÒ'FWB×&vB#à¢Ç7â6Æ74æÖS×¶FWB×2Ó"ãRÓ&÷VæFVBÖgVÆÂföçBÖÖVFVÒG·bæäFF&6Ròv&rÖw&VVâÓSó#FWBÖw&VVâÓCr¢bç7FGW2ÓÓÒtfÆvvVBròv&r×&VBÓSó#FWB×&VBÓCr¢v&rÖÖ&W"ÓSó#FWBÖÖ&W"ÓCwÖÓà¢·bæäFF&6RòtWF÷&¦VBr¢bç7FGW7Ð¢Â÷7ãà¢Ç6Æ74æÖSÒ'FWB×6ÆFRÓSFWB×2×BÓ#ç·bçFÖWÓÂ÷à¢ÂöFcà¢ÂöFcà¢Ð¢ÂöFcà¢ÂöFcà¢ÂöFcà¢Ð ¢²ò¢)Y)Y)Y$Uõ%BtTäU$DôâÔôDÂ)Y)Y)Y¢÷Ð¢·6÷u&W÷'DÖöFÂbb¢ÆFb6Æ74æÖSÒ&fVBç6WBÓ&rÖ&Æ6²óc&6¶G&÷Ö&ÇW"×6ÒfÆWFV×2Ö6VçFW"§W7FgÖ6VçFW"¢ÓSÓB#à¢ÆFb6Æ74æÖSÒ&&rÖ6&B&÷VæFVBÓ'Â&÷&FW"&÷&FW"ÖFVfVÇBÖ×rÖÆrrÖgVÆÂ6F÷rÓ'Â#à¢ÆFb6Æ74æÖSÒ'ÓR&÷&FW"Ö"&÷&FW"ÖFVfVÇBfÆWFV×2Ö6VçFW"§W7FgÖ&WGvVVâ#à¢ÆFcà¢Æ26Æ74æÖSÒ'FWBÖÆrföçBÖ&öÆBFWB×&Ö'#ävVæW&FR6V7W&G&W÷'CÂö3à¢Ç6Æ74æÖSÒ'FWB×6V6öæF'FWB×2×BÓãR#ç¶7W'&VçE&÷W'GææÖWÓÂ÷à¢ÂöFcà¢Æ'WGFöâöä6Æ6³×²Óâ6WE6÷u&W÷'DÖöFÂfÇ6RÒ6Æ74æÖSÒ'ÓãR÷fW#¦&r×6V6öæF'&÷VæFVBÖÆr#ãÅ6¦S×³ÒóãÂö'WGFöãà¢ÂöFcà¢ÆFb6Æ74æÖSÒ'ÓR76R×ÓB#à¢ÆFcà¢ÆÆ&VÂ6Æ74æÖSÒ&&Æö6²FWB×&Ö'FWB×6ÒföçBÖÖVFVÒÖ"Ó"#å&W÷'BGSÂöÆ&VÃà¢ÆFb6Æ74æÖSÒ&w&Bw&BÖ6öÇ2Ó2vÓ"#à¢µ²tFÇrÂuvVV¶ÇrÂtÖöçFÇuÒæÖGRÓâ¢Æ'WGFöâ¶W×·GWÒ6Æ74æÖSÒ'Ó2Ó"ãR&÷VæFVBÖÆr&÷&FW"&÷&FW"ÖFVfVÇBFWB×6ÒföçBÖÖVFVÒFWB×&Ö'÷fW#¦&÷&FW"Ö&ÇVRÓS÷fW#¦&rÖ&ÇVRÓSóG&ç6FöâÖ6öÆ÷'2#à¢·GWÐ¢Âö'WGFöãà¢Ð¢ÂöFcà¢ÂöFcà¢ÆFcà¢ÆÆ&VÂ6Æ74æÖSÒ&&Æö6²FWB×&Ö'FWB×6ÒföçBÖÖVFVÒÖ"Ó"#äæ6ÇVFR6V7Föç3ÂöÆ&VÃà¢ÆFb6Æ74æÖSÒ'76R×Ó"#à¢µ²tWV7WFfR7VÖÖ'rÂtFWFV7FöâÆörrÂuG&öÂ6ö×Ææ6RrÂtæ6FVçB&W÷'G2rÂufV6ÆR7FfGrÂt6ÖW&77FVÒ7FGW2rÂtwV&BW&f÷&Öæ6RuÒæÖ6V7FöâÓâ¢ÆÆ&VÂ¶W×·6V7FöçÒ6Æ74æÖSÒ&fÆWFV×2Ö6VçFW"vÓ"Ó"&÷VæFVB÷fW#¦&r×6V6öæF'ó37W'6÷"×öçFW"#à¢ÆçWBGSÒ&6V6¶&÷"FVfVÇD6V6¶VB6Æ74æÖSÒ'rÓBÓB&÷VæFVB&÷&FW"×6ÆFRÓcFWBÖ&ÇVRÓS&r×6V6öæF'"óà¢Ç7â6Æ74æÖSÒ'FWB×6ÒFWB×&Ö'#ç·6V7FöçÓÂ÷7ãà¢ÂöÆ&VÃà¢Ð¢ÂöFcà¢ÂöFcà¢ÆFcà¢ÆÆ&VÂ6Æ74æÖSÒ&&Æö6²FWB×&Ö'FWB×6ÒföçBÖÖVFVÒÖ"Ó"#äf÷&ÖCÂöÆ&VÃà¢ÆFb6Æ74æÖSÒ&w&Bw&BÖ6öÇ2Ó2vÓ"#à¢Æ'WGFöâ6Æ74æÖSÒ&fÆWFV×2Ö6VçFW"§W7FgÖ6VçFW"vÓ"Ó2Ó"ãR&rÖ&ÇVRÓS÷fW#¦&rÖ&ÇVRÓcFWB×vFR&÷VæFVBÖÆrFWB×6ÒföçBÖÖVFVÒG&ç6FöâÖ6öÆ÷'2#à¢ÄF÷væÆöB6¦S×³GÒóâD`¢Âö'WGFöãà¢Æ'WGFöâ6Æ74æÖSÒ&fÆWFV×2Ö6VçFW"§W7FgÖ6VçFW"vÓ"Ó2Ó"ãR&÷&FW"&÷&FW"ÖFVfVÇBFWB×&Ö'&÷VæFVBÖÆrFWB×6ÒföçBÖÖVFVÒ÷fW#¦&r×6V6öæF'G&ç6FöâÖ6öÆ÷'2#à¢ÄF÷væÆöB6¦S×³GÒóâW6VÀ¢Âö'WGFöãà¢Æ'WGFöâ6Æ74æÖSÒ&fÆWFV×2Ö6VçFW"§W7FgÖ6VçFW"vÓ"Ó2Ó"ãR&÷&FW"&÷&FW"ÖFVfVÇBFWB×&Ö'&÷VæFVBÖÆrFWB×6ÒföçBÖÖVFVÒ÷fW#¦&r×6V6öæF'G&ç6FöâÖ6öÆ÷'2#à¢ÄWFW&æÄÆæ²6¦S×³GÒóâVÖÀ¢Âö'WGFöãà¢ÂöFcà¢ÂöFcà¢ÂöFcà¢ÆFb6Æ74æÖSÒ'ÓR&÷&FW"×B&÷&FW"ÖFVfVÇB&r×6V6öæF'ó#&÷VæFVBÖ"Ó'Â#à¢Ç6Æ74æÖSÒ'FWBÕ³ÒFWB×6ÆFRÓSFWBÖ6VçFW"#å&W÷'G2WFòÖvVæW&FVBFÇBs£ÒæBVÖÆVBFò÷'FÂFÖæ7G&F÷'3Â÷à¢ÂöFcà¢ÂöFcà¢ÂöFcà¢Ð ¢²ò¢)Y)Y)YdôõDU")Y)Y)Y¢÷Ð¢ÆFb6Æ74æÖSÒ&fÆWFV×2Ö6VçFW"§W7FgÖ&WGvVVâÓ2&÷&FW"×B&÷&FW"ÖFVfVÇB#à¢ÆFb6Æ74æÖSÒ&fÆWFV×2Ö6VçFW"vÓ"#à¢ÆFb6Æ74æÖSÒ'rÓRÓR&rÖw&FVçB×FòÖ'"g&öÒÖ&ÇVRÓSFòÖ&ÇVRÓs&÷VæFVBfÆWFV×2Ö6VçFW"§W7FgÖ6VçFW"#à¢Å6VÆB6¦S×³Ò6Æ74æÖSÒ'FWB×vFR"óà¢ÂöFcà¢Ç7â6Æ74æÖSÒ'FWBÕ³ÒFWB×6ÆFRÓS#å÷vW&VB'Ç7â6Æ74æÖSÒ'FWBÖ&ÇVRÓCföçB×6VÖ&öÆB#å7Fvrõ3Â÷7ãâ(	B6V7W&GçFVÆÆvVæ6RÆFf÷&ÓÂ÷7ãà¢ÂöFcà¢Ç7â6Æ74æÖSÒ'FWBÕ³ÒFWB×6ÆFRÓc#äÆ7B7æ3¢¶Æ7EWFFVBçFôÆö6ÆUFÖU7G&ærvVâÕU2rÂ²÷W#¢vçVÖW&2rÂÖçWFS¢s"ÖFvBrÒÓÂ÷7ãà¢ÂöFcà¢ÂöFcà¢§Ð
+                <div className="flex justify-between text-sm"><span className="text-secondary">Remaining</span><span className="text-slate-400 font-semibold">{totalCheckpoints - completedCheckpoints}</span></div>
+                <div className="flex justify-between text-sm"><span className="text-secondary">Missed</span><span className="text-green-400 font-semibold">0</span></div>
+                <div className="flex justify-between text-sm"><span className="text-secondary">Late</span><span className="text-green-400 font-semibold">0</span></div>
+                <div className="border-t border-default pt-2 mt-2">
+                  <div className="flex justify-between text-sm"><span className="text-secondary">Avg Deviation</span><span className="text-primary font-semibold">+1.4 min</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-secondary">GPS Accuracy</span><span className="text-green-400 font-semibold">100%</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card rounded-xl border border-default p-5">
+              <h3 className="font-semibold text-primary text-sm mb-3">30-Day Compliance</h3>
+              <MiniLineChart data={[95, 100, 100, 98, 100, 100, 97, 100, 98, 100, 100, 100, 95, 100, patrolComplianceRate]} height={60} color="#22c55e" />
+              <div className="flex justify-between mt-2">
+                <span className="text-[10px] text-slate-500">30d ago</span>
+                <span className="text-[10px] text-slate-500">Today</span>
+              </div>
+              <p className="text-xs text-secondary mt-2">Average: <span className="text-green-400 font-semibold">98.7%</span></p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── INCIDENTS TAB ─── */}
+      {activeTab === 'incidents' && (
+        <div className="space-y-4">
+          <div className="bg-card rounded-xl border border-default divide-y divide-slate-800">
+            {INCIDENTS.map(inc => (
+              <div key={inc.id} className="p-5 hover:bg-slate-800/20 transition-colors">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle size={16} className={inc.severity === 'high' ? 'text-amber-400' : inc.severity === 'critical' ? 'text-red-400' : 'text-blue-400'} />
+                    <h4 className="text-primary font-semibold">{inc.type}</h4>
+                    <SeverityBadge severity={inc.severity} />
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${inc.status === 'open' ? 'bg-amber-500/20 text-amber-400' : inc.status === 'investigating' ? 'bg-blue-500/20 text-blue-400' : inc.status === 'resolved' ? 'bg-green-500/20 text-green-400' : 'bg-slate-500/20 text-slate-400'}`}>
+                      {inc.status}
+                    </span>
+                  </div>
+                  <span className="text-xs text-slate-500">{formatDateTime(inc.timestamp)}</span>
+                </div>
+                <p className="text-secondary text-sm mb-3">{inc.description}</p>
+                <div className="flex items-center gap-6 text-xs">
+                  <span className="text-slate-400 flex items-center gap-1"><MapPin size={12} /> {inc.location}</span>
+                  <span className="text-slate-400 flex items-center gap-1"><User size={12} /> {inc.assignedGuard}</span>
+                  <span className="text-slate-400 flex items-center gap-1"><Clock size={12} /> Response: <span className="text-primary font-medium">{inc.responseTime}</span></span>
+                  {inc.hasVideo && <span className="text-blue-400 flex items-center gap-1 cursor-pointer hover:text-blue-300"><Play size={12} /> Video</span>}
+                  {inc.hasSnapshot && <span className="text-blue-400 flex items-center gap-1 cursor-pointer hover:text-blue-300"><Camera size={12} /> Snapshot</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ─── CAMERAS TAB ─── */}
+      {activeTab === 'cameras' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {CAMERAS.map(cam => (
+            <div key={cam.id} className="bg-card rounded-xl border border-default p-4 hover:border-slate-600 transition-colors group">
+              {/* Camera preview placeholder */}
+              <div className="w-full h-28 bg-slate-800 rounded-lg mb-3 flex items-center justify-center border border-slate-700 relative overflow-hidden">
+                <Camera size={28} className="text-slate-600" />
+                <div className="absolute top-2 left-2 flex items-center gap-1">
+                  <StatusDot status={cam.status} />
+                  <span className="text-[9px] text-green-400 font-medium uppercase">{cam.status}</span>
+                </div>
+                {cam.aiEnabled && (
+                  <div className="absolute top-2 right-2">
+                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-blue-500/30 text-blue-400 font-semibold flex items-center gap-1"><Zap size={8} /> AI</span>
+                  </div>
+                )}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
+                  <p className="text-white text-[10px] font-medium">{cam.name}</p>
+                </div>
+              </div>
+              <p className="text-xs text-secondary mb-2 flex items-center gap-1"><MapPin size={10} /> {cam.location}</p>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="bg-slate-800/60 rounded p-2">
+                  <p className="text-[10px] text-slate-500">24h Detections</p>
+                  <p className="text-sm font-bold text-primary">{cam.detections24h}</p>
+                </div>
+                <div className="bg-slate-800/60 rounded p-2">
+                  <p className="text-[10px] text-slate-500">Last Event</p>
+                  <p className="text-sm font-medium text-primary">{cam.lastDetection}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ─── VEHICLES TAB ─── */}
+      {activeTab === 'vehicles' && (
+        <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-card rounded-xl border border-default p-4">
+              <p className="text-secondary text-xs">Plates Scanned (24h)</p>
+              <p className="text-2xl font-bold text-primary mt-1">47</p>
+              <MiniBarChart data={[8, 12, 6, 3, 2, 4, 12]} height={24} color="#3b82f6" />
+            </div>
+            <div className="bg-card rounded-xl border border-default p-4">
+              <p className="text-secondary text-xs">Authorized</p>
+              <p className="text-2xl font-bold text-green-400 mt-1">44</p>
+              <p className="text-[10px] text-secondary mt-1">In tenant database</p>
+            </div>
+            <div className="bg-card rounded-xl border border-default p-4">
+              <p className="text-secondary text-xs">Flagged / Unknown</p>
+              <p className="text-2xl font-bold text-amber-400 mt-1">3</p>
+              <p className="text-[10px] text-secondary mt-1">Requires review</p>
+            </div>
+          </div>
+
+          <div className="bg-card rounded-xl border border-default">
+            <div className="p-4 border-b border-default">
+              <h3 className="font-semibold text-primary text-sm">Vehicle Log</h3>
+            </div>
+            <div className="divide-y divide-slate-800">
+              {FLAGGED_VEHICLES.map((v, idx) => (
+                <div key={idx} className="p-4 flex items-center justify-between hover:bg-slate-800/20 transition-colors">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${v.inDatabase ? 'bg-green-500/10' : 'bg-amber-500/10'}`}>
+                      <Car size={18} className={v.inDatabase ? 'text-green-400' : 'text-amber-400'} />
+                    </div>
+                    <div>
+                      <p className="text-primary font-mono font-bold text-lg">{v.plate}</p>
+                      <p className="text-secondary text-xs">{v.type}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${v.inDatabase ? 'bg-green-500/20 text-green-400' : v.status === 'Flagged' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'}`}>
+                      {v.inDatabase ? 'Authorized' : v.status}
+                    </span>
+                    <p className="text-slate-500 text-xs mt-1">{v.time}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ═══ REPORT GENERATION MODAL ═══ */}
+      {showReportModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-card rounded-2xl border border-default max-w-lg w-full shadow-2xl">
+            <div className="p-5 border-b border-default flex items-center justify-between">
+              <div>
+                <h3 className="text-lg font-bold text-primary">Generate Security Report</h3>
+                <p className="text-secondary text-xs mt-0.5">{currentProperty.name}</p>
+              </div>
+              <button onClick={() => setShowReportModal(false)} className="p-1.5 hover:bg-secondary rounded-lg"><X size={18} /></button>
+            </div>
+            <div className="p-5 space-y-4">
+              <div>
+                <label className="block text-primary text-sm font-medium mb-2">Report Type</label>
+                <div className="grid grid-cols-3 gap-2">
+                  {['Daily', 'Weekly', 'Monthly'].map(type => (
+                    <button key={type} className="px-3 py-2.5 rounded-lg border border-default text-sm font-medium text-primary hover:border-blue-500 hover:bg-blue-500/10 transition-colors">
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block text-primary text-sm font-medium mb-2">Include Sections</label>
+                <div className="space-y-2">
+                  {['Executive Summary', 'AI Detection Log', 'Patrol Compliance', 'Incident Reports', 'Vehicle Activity', 'Camera System Status', 'Guard Performance'].map(section => (
+                    <label key={section} className="flex items-center gap-2 p-2 rounded hover:bg-secondary/30 cursor-pointer">
+                      <input type="checkbox" defaultChecked className="w-4 h-4 rounded border-slate-600 text-blue-500 bg-secondary" />
+                      <span className="text-sm text-primary">{section}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block text-primary text-sm font-medium mb-2">Format</label>
+                <div className="grid grid-cols-3 gap-2">
+                  <button className="flex items-center justify-center gap-2 px-3 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors">
+                    <Download size={14} /> PDF
+                  </button>
+                  <button className="flex items-center justify-center gap-2 px-3 py-2.5 border border-default text-primary rounded-lg text-sm font-medium hover:bg-secondary transition-colors">
+                    <Download size={14} /> Excel
+                  </button>
+                  <button className="flex items-center justify-center gap-2 px-3 py-2.5 border border-default text-primary rounded-lg text-sm font-medium hover:bg-secondary transition-colors">
+                    <ExternalLink size={14} /> Email
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="p-5 border-t border-default bg-secondary/20 rounded-b-2xl">
+              <p className="text-[10px] text-slate-500 text-center">Reports auto-generated daily at 7:00 AM and emailed to portal administrators</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ═══ FOOTER ═══ */}
+      <div className="flex items-center justify-between py-3 border-t border-default">
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 bg-gradient-to-br from-blue-500 to-blue-700 rounded flex items-center justify-center">
+            <Shield size={11} className="text-white" />
+          </div>
+          <span className="text-[11px] text-slate-500">Powered by <span className="text-blue-400 font-semibold">Stigg OS</span> — AI Security Intelligence Platform</span>
+        </div>
+        <span className="text-[10px] text-slate-600">Last sync: {lastUpdated.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</span>
+      </div>
+    </div>
+  )
+}
