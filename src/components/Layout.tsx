@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard,
   Building2,
@@ -20,52 +20,121 @@ import {
   X,
   LogOut,
   Users,
-  DollarSign,
+  Wallet,
   Bell,
-  Printer,
+  FileBarChart,
   ScrollText,
-  Wrench,
-  Target,
+  Package,
+  TrendingUp,
   Zap,
 } from 'lucide-react'
+import { useAuth } from '../lib/AuthContext'
+
+function StiggWordmark({ collapsed = false }: { collapsed?: boolean }) {
+  if (collapsed) {
+    return (
+      <div className="w-8 h-8 rounded flex items-center justify-center font-black text-lg" style={{ backgroundColor: '#DC2626', color: '#ffffff' }}>
+        S
+      </div>
+    )
+  }
+  return (
+    <svg viewBox="0 0 300 70" width={100} height={23} xmlns="http://www.w3.org/2000/svg">
+      <text
+        x="0"
+        y="58"
+        fontFamily="Arial Black, Arial, Helvetica, sans-serif"
+        fontWeight="900"
+        fontSize="68"
+        fill="#DC2626"
+        letterSpacing="-2"
+      >
+        stigg
+      </text>
+    </svg>
+  )
+}
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
+interface MenuItem {
+  path: string
+  icon: React.ComponentType<{ size: number; className?: string }>
+  label: string
+  requiredRoles?: string[]
+}
+
+interface MenuSection {
+  title: string
+  items: MenuItem[]
+}
+
 export function Layout({ children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const location = useLocation()
+  const navigate = useNavigate()
+  const { profile, signOut, role } = useAuth()
 
-  const menuItems = [
-    { path: '/', icon: LayoutDashboard, label: 'Command Center' },
-    { path: '/clients', icon: Building2, label: 'Clients & Properties' },
-    { path: '/guards', icon: ShieldCheck, label: 'Guards' },
-    { path: '/scheduling', icon: CalendarDays, label: 'Scheduling' },
-    { path: '/patrol-tracking', icon: MapPin, label: 'Patrol Tracking' },
-    { path: '/incidents', icon: AlertTriangle, label: 'Incidents' },
-    { path: '/kpi-analytics', icon: BarChart3, label: 'KPI Analytics' },
-    { path: '/contracts', icon: FileText, label: 'Contracts & Pricing' },
-    { path: '/invoicing', icon: Receipt, label: 'Invoicing' },
-    { path: '/client-portal', icon: Globe, label: 'Client Portal' },
-    { path: '/ai-intelligence', icon: Brain, label: 'AI Intelligence' },
-    { path: '/route-planning', icon: Route, label: 'Route Planning' },
-    { path: '/compliance', icon: ClipboardCheck, label: 'Compliance' },
-    { path: '/communications', icon: MessageSquare, label: 'Communications' },
-    { type: 'divider', label: 'Phase 2' },
-    { path: '/hr-workforce', icon: Users, label: 'HR & Workforce' },
-    { path: '/financials', icon: DollarSign, label: 'Financials' },
-    { path: '/notifications', icon: Bell, label: 'Notifications' },
-    { path: '/reports', icon: Printer, label: 'Reporting Engine' },
-    { path: '/audit-log', icon: ScrollText, label: 'Audit Log' },
-    { path: '/equipment', icon: Wrench, label: 'Equipment & Assets' },
-    { path: '/sales-pipeline', icon: Target, label: 'Sales Pipeline' },
-    { path: '/automation', icon: Zap, label: 'Automation Rules' },
-    { type: 'divider', label: 'System' },
-    { path: '/settings', icon: Settings, label: 'Settings' },
+  const menuSections: MenuSection[] = [
+    {
+      title: 'Operations',
+      items: [
+        { path: '/', icon: LayoutDashboard, label: 'Command Center' },
+        { path: '/clients', icon: Building2, label: 'Clients & Properties', requiredRoles: ['admin', 'manager', 'supervisor'] },
+        { path: '/guards', icon: ShieldCheck, label: 'Guards', requiredRoles: ['admin', 'manager', 'supervisor'] },
+        { path: '/scheduling', icon: CalendarDays, label: 'Scheduling', requiredRoles: ['admin', 'manager', 'supervisor'] },
+        { path: '/patrol-tracking', icon: MapPin, label: 'Patrol Tracking', requiredRoles: ['admin', 'manager', 'supervisor'] },
+        { path: '/incidents', icon: AlertTriangle, label: 'Incidents' },
+        { path: '/route-planning', icon: Route, label: 'Route Planning', requiredRoles: ['admin', 'manager', 'supervisor'] },
+        { path: '/equipment-assets', icon: Package, label: 'Equipment & Assets', requiredRoles: ['admin', 'manager', 'supervisor'] },
+      ],
+    },
+    {
+      title: 'Analytics',
+      items: [
+        { path: '/kpi-analytics', icon: BarChart3, label: 'KPI Analytics', requiredRoles: ['admin', 'manager'] },
+        { path: '/financial-dashboard', icon: Wallet, label: 'Financial Dashboard', requiredRoles: ['admin', 'manager'] },
+        { path: '/reporting', icon: FileBarChart, label: 'Reporting Engine', requiredRoles: ['admin', 'manager'] },
+        { path: '/sales-pipeline', icon: TrendingUp, label: 'Sales Pipeline', requiredRoles: ['admin', 'manager'] },
+        { path: '/ai-intelligence', icon: Brain, label: 'AI Intelligence', requiredRoles: ['admin', 'manager'] },
+      ],
+    },
+    {
+      title: 'Administration',
+      items: [
+        { path: '/contracts', icon: FileText, label: 'Contracts & Pricing', requiredRoles: ['admin', 'manager'] },
+        { path: '/invoicing', icon: Receipt, label: 'Invoicing', requiredRoles: ['admin', 'manager'] },
+        { path: '/hr-workforce', icon: Users, label: 'HR & Workforce', requiredRoles: ['admin', 'manager'] },
+        { path: '/compliance', icon: ClipboardCheck, label: 'Compliance', requiredRoles: ['admin', 'manager'] },
+        { path: '/communications', icon: MessageSquare, label: 'Communications', requiredRoles: ['admin', 'manager'] },
+        { path: '/notifications', icon: Bell, label: 'Notifications', requiredRoles: ['admin', 'manager', 'supervisor'] },
+        { path: '/audit-log', icon: ScrollText, label: 'Audit Log', requiredRoles: ['admin'] },
+        { path: '/automation-rules', icon: Zap, label: 'Automation Rules', requiredRoles: ['admin'] },
+        { path: '/client-portal', icon: Globe, label: 'Client Portal', requiredRoles: ['admin', 'manager'] },
+        { path: '/settings', icon: Settings, label: 'Settings', requiredRoles: ['admin'] },
+      ],
+    },
   ]
 
   const isActive = (path: string) => location.pathname === path
+
+  const canAccessItem = (requiredRoles?: string[]) => {
+    if (!requiredRoles) return true
+    return requiredRoles.includes(role || '')
+  }
+
+  const handleLogout = async () => {
+    await signOut()
+    navigate('/login')
+  }
+
+  // Filter menu items based on user role
+  const visibleMenuSections = menuSections.map((section) => ({
+    ...section,
+    items: section.items.filter((item) => canAccessItem(item.requiredRoles)),
+  })).filter((section) => section.items.length > 0)
 
   return (
     <div className="flex h-screen bg-primary">
@@ -78,59 +147,53 @@ export function Layout({ children }: LayoutProps) {
         {/* Logo/Brand */}
         <div className="p-4 border-b border-default">
           <div className="flex items-center justify-between">
-            <div className={`font-bold text-accent ${!sidebarOpen && 'hidden'}`}>
-              <span className="text-xl">STIGG</span>
-            </div>
-            {!sidebarOpen && (
-              <div className="w-8 h-8 bg-accent rounded flex items-center justify-center text-secondary font-bold">
-                S
-              </div>
-            )}
+            <StiggWordmark collapsed={!sidebarOpen} />
           </div>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto p-2 space-y-1">
-          {menuItems.map((item, idx) => {
-            if ((item as any).type === 'divider') {
-              return (
-                <div key={`divider-${idx}`} className="pt-3 pb-1 px-3">
-                  {sidebarOpen && (
-                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{item.label}</p>
-                  )}
-                  {!sidebarOpen && <div className="border-t border-default" />}
-                </div>
-              )
-            }
-            const Icon = item.icon!
-            return (
-              <Link
-                key={item.path}
-                to={item.path!}
-                className={`flex items-center gap-3 px-3 py-2 rounded transition-colors ${
-                  isActive(item.path!)
-                    ? 'bg-accent text-secondary font-semibold'
-                    : 'text-secondary hover:bg-card'
-                }`}
-                title={item.label}
-              >
-                <Icon size={20} className="flex-shrink-0" />
-                {sidebarOpen && <span className="text-sm">{item.label}</span>}
-              </Link>
-            )
-          })}
+        <nav className="flex-1 overflow-y-auto p-2 space-y-4">
+          {visibleMenuSections.map((section) => (
+            <div key={section.title}>
+              {sidebarOpen && (
+                <p className="px-3 py-2 text-xs font-semibold text-secondary uppercase opacity-70">
+                  {section.title}
+                </p>
+              )}
+              <div className="space-y-1">
+                {section.items.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`flex items-center gap-3 px-3 py-2 rounded transition-colors ${
+                        isActive(item.path)
+                          ? 'bg-accent text-secondary font-semibold'
+                          : 'text-secondary hover:bg-card'
+                      }`}
+                      title={item.label}
+                    >
+                      <Icon size={20} className="flex-shrink-0" />
+                      {sidebarOpen && <span className="text-sm">{item.label}</span>}
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
 
         {/* User Profile */}
         <div className="p-2 border-t border-default">
           <div className="flex items-center gap-3 px-3 py-2 rounded hover:bg-card cursor-pointer transition-colors">
-            <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-secondary font-bold flex-shrink-0">
-              A
+            <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold flex-shrink-0" style={{ backgroundColor: '#DC2626', color: '#ffffff' }}>
+              {profile?.full_name.charAt(0).toUpperCase() || 'U'}
             </div>
             {sidebarOpen && (
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium truncate">Admin User</div>
-                <div className="text-xs text-secondary truncate">admin@stigg.ca</div>
+                <div className="text-sm font-medium truncate">{profile?.full_name || 'User'}</div>
+                <div className="text-xs text-secondary truncate">{profile?.email || 'user@stigg.ca'}</div>
               </div>
             )}
           </div>
@@ -148,7 +211,7 @@ export function Layout({ children }: LayoutProps) {
             >
               {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
-            <h1 className="text-xl font-semibold text-primary hidden sm:block">
+            <h1 className="text-xl font-semibold hidden sm:block" style={{ color: '#f8fafc' }}>
               Stigg Security Operations
             </h1>
           </div>
@@ -160,7 +223,11 @@ export function Layout({ children }: LayoutProps) {
                 day: 'numeric',
               })}
             </div>
-            <button className="p-2 hover:bg-card rounded transition-colors">
+            <button
+              onClick={handleLogout}
+              className="p-2 hover:bg-card rounded transition-colors"
+              title="Log out"
+            >
               <LogOut size={18} className="text-secondary" />
             </button>
           </div>

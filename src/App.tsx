@@ -1,5 +1,9 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './lib/AuthContext'
 import { Layout } from './components/Layout'
+import { ClientPortalLayout } from './components/ClientPortalLayout'
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { Login } from './pages/Login'
 import { CommandCenter } from './pages/CommandCenter'
 import { Clients } from './pages/Clients'
 import { Guards } from './pages/Guards'
@@ -15,46 +19,270 @@ import { RoutePlanning } from './pages/RoutePlanning'
 import { Compliance } from './pages/Compliance'
 import { Communications } from './pages/Communications'
 import { Settings } from './pages/Settings'
-// Phase 2 modules
-import HRWorkforce from './pages/HRWorkforce'
-import FinancialDashboard from './pages/FinancialDashboard'
-import NotificationsAlerts from './pages/NotificationsAlerts'
-import ReportingEngine from './pages/ReportingEngine'
-import AuditLog from './pages/AuditLog'
-import EquipmentAssets from './pages/EquipmentAssets'
-import SalesPipeline from './pages/SalesPipeline'
-import AutomationRules from './pages/AutomationRules'
+import { AuditLog } from './pages/AuditLog'
+import { AutomationRules } from './pages/AutomationRules'
+import { EquipmentAssets } from './pages/EquipmentAssets'
+import { FinancialDashboard } from './pages/FinancialDashboard'
+import { HRWorkforce } from './pages/HRWorkforce'
+import { NotificationsAlerts } from './pages/NotificationsAlerts'
+import { ReportingEngine } from './pages/ReportingEngine'
+import { SalesPipeline } from './pages/SalesPipeline'
 
 function App() {
   return (
-    <Layout>
+    <AuthProvider>
       <Routes>
-        <Route path="/" element={<CommandCenter />} />
-        <Route path="/clients" element={<Clients />} />
-        <Route path="/guards" element={<Guards />} />
-        <Route path="/scheduling" element={<Scheduling />} />
-        <Route path="/patrol-tracking" element={<PatrolTracking />} />
-        <Route path="/incidents" element={<Incidents />} />
-        <Route path="/kpi-analytics" element={<KPIAnalytics />} />
-        <Route path="/contracts" element={<Contracts />} />
-        <Route path="/invoicing" element={<Invoicing />} />
-        <Route path="/client-portal" element={<ClientPortal />} />
-        <Route path="/ai-intelligence" element={<AIIntelligence />} />
-        <Route path="/route-planning" element={<RoutePlanning />} />
-        <Route path="/compliance" element={<Compliance />} />
-        <Route path="/communications" element={<Communications />} />
-        <Route path="/settings" element={<Settings />} />
-        {/* Phase 2 */}
-        <Route path="/hr-workforce" element={<HRWorkforce />} />
-        <Route path="/financials" element={<FinancialDashboard />} />
-        <Route path="/notifications" element={<NotificationsAlerts />} />
-        <Route path="/reports" element={<ReportingEngine />} />
-        <Route path="/audit-log" element={<AuditLog />} />
-        <Route path="/equipment" element={<EquipmentAssets />} />
-        <Route path="/sales-pipeline" element={<SalesPipeline />} />
-        <Route path="/automation" element={<AutomationRules />} />
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+
+        {/* Admin Routes */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'supervisor', 'guard']}>
+              <Layout>
+                <CommandCenter />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/clients"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'supervisor']}>
+              <Layout>
+                <Clients />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/guards"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'supervisor']}>
+              <Layout>
+                <Guards />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/scheduling"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'supervisor']}>
+              <Layout>
+                <Scheduling />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/patrol-tracking"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'supervisor']}>
+              <Layout>
+                <PatrolTracking />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/incidents"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'supervisor', 'guard']}>
+              <Layout>
+                <Incidents />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/kpi-analytics"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <KPIAnalytics />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contracts"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <Contracts />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/invoicing"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <Invoicing />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/client-portal"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <ClientPortal />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ai-intelligence"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <AIIntelligence />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/route-planning"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'supervisor']}>
+              <Layout>
+                <RoutePlanning />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/compliance"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <Compliance />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/communications"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <Communications />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Layout>
+                <Settings />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/audit-log"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Layout>
+                <AuditLog />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/automation-rules"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <Layout>
+                <AutomationRules />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/equipment-assets"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'supervisor']}>
+              <Layout>
+                <EquipmentAssets />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/financial-dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <FinancialDashboard />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/hr-workforce"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <HRWorkforce />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager', 'supervisor']}>
+              <Layout>
+                <NotificationsAlerts />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reporting"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <ReportingEngine />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sales-pipeline"
+          element={
+            <ProtectedRoute allowedRoles={['admin', 'manager']}>
+              <Layout>
+                <SalesPipeline />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Client Portal Routes */}
+        <Route
+          path="/portal/*"
+          element={
+            <ProtectedRoute requiredRole="client">
+              <ClientPortalLayout>
+                <ClientPortal />
+              </ClientPortalLayout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </Layout>
+    </AuthProvider>
   )
 }
 
