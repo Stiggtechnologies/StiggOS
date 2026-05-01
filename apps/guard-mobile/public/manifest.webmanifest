@@ -1,0 +1,11 @@
+{
+  "name": "Stigg Field",
+  "short_name": "Stigg",
+  "description": "Stigg field app for licensed security officers — clock-in, tour scans, incident reports.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#020617",
+  "theme_color": "#0f172a",
+  "icons": []
+}

@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@stigg/shared": ["./packages/shared/src/index.ts"],
+      "@stigg/shared/*": ["./packages/shared/src/*"],
+      "@stigg/ai": ["./packages/ai/src/index.ts"],
+      "@stigg/ai/*": ["./packages/ai/src/*"],
+      "@stigg/db": ["./packages/db/src/index.ts"],
+      "@stigg/db/*": ["./packages/db/src/*"],
+      "@stigg/compliance": ["./packages/compliance/src/index.ts"],
+      "@stigg/compliance/*": ["./packages/compliance/src/*"],
+      "@stigg/ui": ["./packages/ui/src/index.ts"],
+      "@stigg/ui/*": ["./packages/ui/src/*"]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply antialiased; }
+}
+
+@layer components {
+  .card { @apply rounded-lg border border-slate-800 bg-slate-900/60 p-6; }
+  .badge-critical { @apply bg-red-500/15 text-red-300 border border-red-500/30; }
+  .badge-high     { @apply bg-orange-500/15 text-orange-300 border border-orange-500/30; }
+  .badge-medium   { @apply bg-amber-500/15 text-amber-200 border border-amber-500/30; }
+  .badge-low      { @apply bg-sky-500/15 text-sky-300 border border-sky-500/30; }
+  .stat           { @apply card flex items-center justify-between; }
+  .btn-primary    { @apply px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white font-medium; }
+  .btn-ghost      { @apply px-4 py-2 rounded border border-slate-700 hover:bg-slate-800 text-slate-200; }
+  .btn-danger     { @apply px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-white font-medium; }
+  .input          { @apply w-full px-3 py-2 rounded bg-slate-900 border border-slate-700 text-slate-100 focus:outline-none focus:border-blue-500; }
+}

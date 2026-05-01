@@ -1,0 +1,36 @@
+{
+  "name": "stigg-os",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stigg Operating System — AI-native multi-line security platform for Stigg Security Inc.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "dev:console": "npm run dev -w @stigg/console",
+    "dev:portal": "npm run dev -w @stigg/client-portal",
+    "dev:guard": "npm run dev -w @stigg/guard-mobile",
+    "dev:monitoring": "npm run dev -w @stigg/monitoring",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:e2e": "playwright test",
+    "db:migrate": "supabase db push",
+    "db:reset": "supabase db reset",
+    "db:seed": "tsx packages/db/seed.ts",
+    "ai:eval": "tsx packages/ai/evals/run.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^22.7.0",
+    "supabase": "^1.207.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
