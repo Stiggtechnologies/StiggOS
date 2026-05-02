@@ -186,6 +186,9 @@ function ShiftCard({ onQueue }: { onQueue: () => void }) {
 
 function TourScanCard({ onQueue }: { onQueue: () => void }) {
   const [scan, setScan] = useState('');
+  const [abnormal, setAbnormal] = useState(false);
+  const [reason, setReason] = useState('');
+  const [photoDataUrl, setPhotoDataUrl] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
   return (
     <div className="rounded-lg bg-slate-900 p-5 space-y-3">
@@ -197,6 +200,35 @@ function TourScanCard({ onQueue }: { onQueue: () => void }) {
         value={scan}
         onChange={(e) => setScan(e.target.value)}
       />
+      <label className="flex items-center gap-2 text-sm text-slate-300">
+        <input type="checkbox" checked={abnormal} onChange={(e) => setAbnormal(e.target.checked)} />
+        Something abnormal
+      </label>
+      {abnormal && (
+        <>
+          <textarea
+            className="w-full px-3 py-2 rounded bg-slate-950 border border-amber-500/40 text-sm"
+            rows={3}
+            placeholder="What did you see? (door damaged, person loitering, etc.)"
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+          />
+          <label className="block text-sm text-slate-400">
+            Photo
+            <input
+              type="file" accept="image/*" capture="environment"
+              className="block mt-1 text-xs"
+              onChange={async (e) => {
+                const file = e.target.files?.[0]; if (!file) return;
+                const reader = new FileReader();
+                reader.onload = () => setPhotoDataUrl(String(reader.result));
+                reader.readAsDataURL(file);
+              }}
+            />
+          </label>
+          {photoDataUrl && <img src={photoDataUrl} alt="" className="rounded max-h-48 object-cover" />}
+        </>
+      )}
       <button
         className="w-full py-3 rounded bg-blue-600 font-medium"
         onClick={async () => {
@@ -206,11 +238,15 @@ function TourScanCard({ onQueue }: { onQueue: () => void }) {
             enqueue('tour_scan', {
               checkpoint_token: scan,
               scanned_at: new Date().toISOString(),
+              abnormal,
+              abnormal_reason: abnormal ? reason : null,
+              photo_data_url: abnormal ? photoDataUrl : null,
               geo: `POINT(${f.lng} ${f.lat})`,
               geo_accuracy_m: f.accuracy_m,
             });
             onQueue();
-            setScan(''); setMsg('Scan queued.');
+            setScan(''); setAbnormal(false); setReason(''); setPhotoDataUrl(null);
+            setMsg('Scan queued.');
           } catch (e) { setMsg(e instanceof Error ? e.message : String(e)); }
         }}
       >
@@ -219,6 +255,29 @@ function TourScanCard({ onQueue }: { onQueue: () => void }) {
       {msg && <p className="text-sm text-slate-300">{msg}</p>}
     </div>
   );
+}
+
+/**
+ * Build a randomized patrol order from a set of checkpoint tokens.
+ * Exported for testing — the field UI uses this when a tour starts so
+ * patrols are unpredictable (security-through-unpredictability for hostile
+ * observers timing the rotation).
+ */
+export function shufflePatrol<T>(items: T[], seed?: number): T[] {
+  const arr = items.slice();
+  // Fisher–Yates with a small LCG when a seed is provided (for tests).
+  let rng: () => number;
+  if (seed != null) {
+    let s = seed >>> 0 || 1;
+    rng = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 2 ** 32; };
+  } else {
+    rng = Math.random;
+  }
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [arr[i], arr[j]] = [arr[j]!, arr[i]!];
+  }
+  return arr;
 }
 
 function IncidentCard({ onQueue }: { onQueue: () => void }) {

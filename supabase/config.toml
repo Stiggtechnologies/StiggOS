@@ -65,3 +65,18 @@ verify_jwt = true
 [functions.stripe-webhook]
 # Stripe signs the request itself; no Supabase JWT.
 verify_jwt = false
+
+[functions.dispatch-router]
+verify_jwt = true
+
+[functions.hikvision-events]
+# Hikvision NVRs sign with their own HMAC secret on the webhook.
+verify_jwt = false
+
+[functions.vehicle-track]
+# Traccar / OsmAnd shippers — auth via TRACCAR_TOKEN URL parameter.
+verify_jwt = false
+
+[functions.asset-track]
+# AirTag bridges — auth via ASSET_TRACK_TOKEN URL parameter.
+verify_jwt = false

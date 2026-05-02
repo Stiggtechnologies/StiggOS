@@ -4,7 +4,27 @@ All notable changes to StiggOS. Format follows [Keep a Changelog](https://keepac
 
 ## [Unreleased]
 
-### Added — `os-v2-rebuild`
+### Added — `os-v2-rebuild` (cont'd, automation pass)
+
+- **Camera-event automation that the standalone NVR can't do.** `arming_schedules` (when), `linkage_rules` (event × severity → action set), `dispatch_routes` (rotating pool of human/automated/police targets with cooldowns + escalation chains), `dispatch_events` (audit log of every fan-out). Replaces what HikCentral Professional does — vendor-agnostic.
+- **`@stigg/dispatch` package** — pure deterministic evaluator. Picks the most-specific rule, gates on the arming schedule, fans out actions, advances rotation state. Handles `round_robin`, `escalation`, `severity_escalation`, `broadcast`. 25 unit tests covering every branch.
+- **`@stigg/integrations`** — vendor adapters with no SDK deps:
+  - `hikvision/` — ISAPI event parser, HMAC-SHA256 webhook verifier, relay/PTZ/overlay client.
+  - `traccar/` — OsmAnd query + Traccar JSON forwarder parsing; speeding/idling/unauthorized-window rule evaluator.
+  - `findmy/` — AirTag bridge ping parser.
+- **Edge function webhooks**:
+  - `hikvision-events` — verifies HMAC, parses ISAPI envelopes (linecrossing/intrusion/region_*/object_removal/tamper/motion/PIR/alarm_input), writes `camera_alerts`, hands off to dispatch-router.
+  - `vehicle-track` — accepts OsmAnd GET + Traccar POST, writes `vehicle_track_points`, runs alert rules, dispatches high+ severity.
+  - `asset-track` — accepts AirTag bridge POSTs, updates `asset_trackers.last_seen_at`.
+  - `dispatch-router` — runs the dispatch evaluator and fans out: notify_*, fire_relay (Hik ISAPI), create_incident, dispatch_route. Persists `dispatch_events` for every step.
+- **Operational compliance rules** (in `@stigg/compliance/operational/automation.ts`): asset-offline (24h/72h), low battery, vehicle alert backlog (7-day count), missed-tour trends. 9 new tests.
+- **New schema 0006** — `nvr_systems`, `arming_schedules`, `linkage_rules`, `dispatch_routes`, `dispatch_events`, `vehicle_track_points`, `vehicle_alerts`, `guard_track_points`, `asset_trackers`, `asset_track_pings`. Plus `tour_scans.abnormal` + `abnormal_reason`. Full RLS + audit triggers.
+- **Console pages**: Cameras & Automation (4-tab editor: cameras / NVR bridges / arming schedules / linkage rules with action JSON editor), Vehicles & GPS (live alerts), Asset trackers (recency-coloured), Dispatch (live event stream w/ ack).
+- **Guard mobile**: abnormal-flag toggle on tour scans + inline camera capture (`<input capture="environment">`) + `shufflePatrol()` for randomized checkpoint order.
+- **Client portal** picks up the approved marketing copy via `WelcomeBanner` on the dashboard.
+- **Runbooks**: `RUNBOOK-hikvision.md` (NVR setup, HMAC, channels, relay), `RUNBOOK-traccar.md` (OEM/OBD/OsmAnd config, thresholds), `RUNBOOK-asset-tracking.md` (OpenHaystack bridge, AirTag pairing), `RUNBOOK-dispatch-rules.md` (three canonical rule patterns + three canonical routes), `MARKETING-COPY.md` (approved customer-facing language at three lengths).
+
+### Added — initial `os-v2-rebuild`
 
 - **Multi-provider LLM** — Claude, GPT, Gemini, OpenAI-compatible (Ollama/vLLM/Groq/Together/Fireworks/OpenRouter), and a deterministic mock. Provider chosen by env var; one normalized message shape across providers; no SDK dependencies. See `docs/LLM-PROVIDERS.md`.
 - **Postgres schema, v1** — orgs, RBAC, sites, guards, shifts, tour routes/runs/scans, lone-worker check-ins, incidents (with PostGIS + pgvector), incident evidence + custody, cameras + alerts + talk-down, vehicles + transport runs + custody events, IT assets + tickets, PIPEDA breach register, leads + security assessments + contracts + invoices, AI sessions/messages/insights, notifications, audit log.

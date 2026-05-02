@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import {
   LayoutDashboard, Users, Building2, Calendar, Map, AlertTriangle, BarChart3,
   FileText, Receipt, Brain, Shield, MessageSquare, Settings, Truck, Cpu, ScrollText,
-  Camera, LogOut,
+  Camera, LogOut, Radio, Tag,
 } from 'lucide-react';
 import { useAuth } from '../lib/AuthContext';
 
@@ -15,6 +15,10 @@ const NAV = [
   { to: '/guards',            label: 'Guards',             icon: Users          },
   { to: '/sites',             label: 'Sites & Posts',      icon: Building2      },
   { to: '/patrols',           label: 'Patrols',            icon: Map            },
+  { to: '/cameras',           label: 'Cameras & Automation', icon: Camera       },
+  { to: '/vehicles',          label: 'Vehicles & GPS',     icon: Truck          },
+  { to: '/assets',            label: 'Asset trackers',     icon: Tag            },
+  { to: '/dispatch',          label: 'Dispatch',           icon: Radio          },
   { to: '/monitoring',        label: 'Virtual Guarding',   icon: Camera         },
   { to: '/transport',         label: 'Secure Transport',   icon: Truck          },
   { to: '/it',                label: 'IT & Cyber',         icon: Cpu            },

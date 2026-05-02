@@ -6,6 +6,7 @@
 
 import { albertaRules } from './regions/alberta.js';
 import { pipedaRules } from './federal/pipeda.js';
+import { automationRules } from './operational/automation.js';
 import type { ComplianceContext, Finding, RuleFn } from './types.js';
 
 export type { Finding, ComplianceContext, RuleFn } from './types.js';
@@ -15,10 +16,11 @@ const REGIONS: Record<string, RuleFn[]> = {
 };
 
 const FEDERAL: RuleFn[] = [...pipedaRules];
+const OPERATIONAL: RuleFn[] = [...automationRules];
 
 export async function runCompliance(ctx: ComplianceContext): Promise<Finding[]> {
   const region = (ctx.region ?? 'AB').toUpperCase();
-  const rules: RuleFn[] = [...(REGIONS[region] ?? []), ...FEDERAL];
+  const rules: RuleFn[] = [...(REGIONS[region] ?? []), ...FEDERAL, ...OPERATIONAL];
 
   const findings: Finding[] = [];
   for (const r of rules) {

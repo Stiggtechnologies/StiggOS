@@ -5,4 +5,6 @@ export default defineWorkspace([
   'packages/compliance',
   'packages/ai',
   'packages/shared',
+  'packages/dispatch',
+  'packages/integrations',
 ]);

@@ -46,6 +46,25 @@ export interface ComplianceContext {
     opc_reported: boolean;
     records_affected: number | null;
   }>;
+  /** Optional automation inputs — allow operational rules to flag drift. */
+  asset_trackers?: Array<{
+    id: string;
+    label: string;
+    last_seen_at: string | null;
+    is_active: boolean;
+    battery_pct: number | null;
+  }>;
+  vehicle_alert_counts?: Array<{
+    vehicle_id: string;
+    unit_number: string;
+    count_7d: number;
+    severity_max: 'low' | 'medium' | 'high' | 'critical';
+  }>;
+  tour_misses?: Array<{
+    site_id: string;
+    site_name: string;
+    missed_count_24h: number;
+  }>;
   /** Today (UTC). Lets tests pin time. */
   now?: Date;
 }

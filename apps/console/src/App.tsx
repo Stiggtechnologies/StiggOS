@@ -22,6 +22,10 @@ import { EquipmentAssets } from './pages/EquipmentAssets';
 import { ITCyber } from './pages/ITCyber';
 import { SecureTransport } from './pages/SecureTransport';
 import { Messages } from './pages/Messages';
+import { Cameras } from './pages/Cameras';
+import { Vehicles } from './pages/Vehicles';
+import { Assets } from './pages/Assets';
+import { Dispatch } from './pages/Dispatch';
 
 const STAFF = ['owner','admin','manager','dispatcher','supervisor','guard'] as const;
 const MGR   = ['owner','admin','manager'] as const;
@@ -48,6 +52,10 @@ export default function App() {
       <Route path="/patrols"     element={<ProtectedRoute allowed={[...STAFF]}><Layout><Patrols /></Layout></ProtectedRoute>} />
       <Route path="/transport"   element={<ProtectedRoute allowed={[...STAFF]}><Layout><SecureTransport /></Layout></ProtectedRoute>} />
       <Route path="/equipment-assets" element={<ProtectedRoute allowed={[...STAFF]}><Layout><EquipmentAssets /></Layout></ProtectedRoute>} />
+      <Route path="/cameras"     element={<ProtectedRoute allowed={[...MGR, 'supervisor', 'dispatcher']}><Layout><Cameras /></Layout></ProtectedRoute>} />
+      <Route path="/vehicles"    element={<ProtectedRoute allowed={[...MGR, 'supervisor', 'dispatcher']}><Layout><Vehicles /></Layout></ProtectedRoute>} />
+      <Route path="/assets"      element={<ProtectedRoute allowed={[...MGR, 'supervisor']}><Layout><Assets /></Layout></ProtectedRoute>} />
+      <Route path="/dispatch"    element={<ProtectedRoute allowed={[...MGR, 'dispatcher']}><Layout><Dispatch /></Layout></ProtectedRoute>} />
       <Route path="/it"          element={<ProtectedRoute allowed={[...MGR, 'it_tech']}><Layout><ITCyber /></Layout></ProtectedRoute>} />
 
       <Route path="/clients"     element={<ProtectedRoute allowed={[...MGR]}><Layout><Clients /></Layout></ProtectedRoute>} />

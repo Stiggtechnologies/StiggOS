@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase, supabaseConfigured } from '../lib/supabase';
 import { AlertTriangle, Building2, Receipt, ChevronRight } from 'lucide-react';
+import { WelcomeBanner } from '../components/WelcomeBanner';
 
 interface Counts { sites: number; openIncidents: number; unpaidInvoices: number; }
 
@@ -31,6 +32,8 @@ export function Dashboard() {
         <h1 className="text-3xl font-bold">Welcome back</h1>
         <p className="text-slate-500 mt-1">Live overview of your sites, incidents, and invoices.</p>
       </header>
+
+      <WelcomeBanner />
 
       {error && <div className="card border-red-200 bg-red-50 text-red-700">{error}</div>}
 
