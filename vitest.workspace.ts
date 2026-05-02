@@ -7,4 +7,5 @@ export default defineWorkspace([
   'packages/shared',
   'packages/dispatch',
   'packages/integrations',
+  'packages/scheduling',
 ]);

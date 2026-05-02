@@ -4,6 +4,18 @@ All notable changes to StiggOS. Format follows [Keep a Changelog](https://keepac
 
 ## [Unreleased]
 
+### Added — `os-v2-rebuild` (cont'd, Northview go-live pass)
+
+- **First live customer contract: Northview Residential REIT (NV-2026-0001).** Month-to-month MSA with seasonal pricing (May–Oct $9,900 / Nov–Apr $14,150 + GST), seven Fort McMurray sites (Parkview I/II, 6/4 Nixon, 16/15 Saunderson + MacDonald optional add-on), six checkpoints per site, two route flows (A/B) alternating weekly, KPI framework wired.
+- **Schema 0007** — `contracts.pricing_schedule` (seasonal slots with components), `contracts.kpi_targets`, `contract_sites` (junction with `is_optional`), `contract_kpi_snapshots` (monthly rollups, idempotent), `sites.post_order_template`, `shifts.guard_id` made nullable so demand rows can be seeded before Schedule Agent assigns. View `v_contract_patrol_delivery` for completion % per contract per month.
+- **`@stigg/scheduling`** (new package, 12 tests) — deterministic seasonal patrol generator. Same seed → same schedule. Honours: 1 visit summer / 2 visits winter, ±15 min flex, Wave 1 + Wave 2 windows in the contract's local timezone with DST handling, ISO-week alternation between Flow A and Flow B, `every_other_day` pattern for optional sites in summer, override of visits-per-night per site. Plus `pickSeasonalRate()` for billing slot resolution.
+- **`scripts/seed-northview.ts`** — single idempotent script that loads the entire signed MSA into a live database: client, 7 sites with geofences + post-order markdown, contract with seasonal pricing + KPI targets, contract↔site links, 2 tour routes per site with 6 checkpoints each, "Northview after-hours patrol" arming schedule, org-scoped linkage rule for tour-miss → Dawn email, Dawn Collier portal user, 60 days of pre-generated shift demand. Re-running is safe.
+- **`billing-run` honors `pricing_schedule`.** Picks the seasonal slot for the invoice month, emits one invoice line item per pricing component (Core / MacDonald), still adds Alberta GST 5%.
+- **`contract-kpi-snapshot` edge function** — computes the five KPI buckets (Patrol Delivery, Asset Protection, Incident Response, Hotspot Trends, Maintenance Impact) for a contract×month, writes/upserts a `contract_kpi_snapshots` row with an AI-narrated `summary_md` for the management review.
+- **Console — Contract Dashboard** at `/contracts/:id`. Per-month KPI buckets, seasonal pricing card showing the current slot + component breakdown, sites under contract, snapshot history with completion-% + incident counts, "Refresh KPI snapshot" calls the edge function. Row click on `/contracts` drills in.
+- **Operating runbook** `docs/CONTRACTS-NORTHVIEW.md` — daily / weekly / monthly cadence, escalation paths, common scenarios (sick guard, hotspot request, mid-contract add, damage claim, termination).
+- **Root scripts** — `npm run seed:northview`.
+
 ### Added — `os-v2-rebuild` (cont'd, automation pass)
 
 - **Camera-event automation that the standalone NVR can't do.** `arming_schedules` (when), `linkage_rules` (event × severity → action set), `dispatch_routes` (rotating pool of human/automated/police targets with cooldowns + escalation chains), `dispatch_events` (audit log of every fan-out). Replaces what HikCentral Professional does — vendor-agnostic.

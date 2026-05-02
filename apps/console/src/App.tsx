@@ -26,6 +26,7 @@ import { Cameras } from './pages/Cameras';
 import { Vehicles } from './pages/Vehicles';
 import { Assets } from './pages/Assets';
 import { Dispatch } from './pages/Dispatch';
+import { ContractDashboard } from './pages/ContractDashboard';
 
 const STAFF = ['owner','admin','manager','dispatcher','supervisor','guard'] as const;
 const MGR   = ['owner','admin','manager'] as const;
@@ -60,7 +61,8 @@ export default function App() {
 
       <Route path="/clients"     element={<ProtectedRoute allowed={[...MGR]}><Layout><Clients /></Layout></ProtectedRoute>} />
       <Route path="/leads"       element={<ProtectedRoute allowed={[...MGR]}><Layout><SalesPipeline /></Layout></ProtectedRoute>} />
-      <Route path="/contracts"   element={<ProtectedRoute allowed={[...MGR]}><Layout><Contracts /></Layout></ProtectedRoute>} />
+      <Route path="/contracts"      element={<ProtectedRoute allowed={[...MGR]}><Layout><Contracts /></Layout></ProtectedRoute>} />
+      <Route path="/contracts/:id"  element={<ProtectedRoute allowed={[...MGR]}><Layout><ContractDashboard /></Layout></ProtectedRoute>} />
       <Route path="/invoices"    element={<ProtectedRoute allowed={[...MGR]}><Layout><Invoices /></Layout></ProtectedRoute>} />
 
       <Route path="/audit"       element={<ProtectedRoute allowed={[...ADMIN]}><Layout><AuditLog /></Layout></ProtectedRoute>} />

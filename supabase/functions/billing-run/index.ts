@@ -49,7 +49,7 @@ Deno.serve(async (req) => {
   const end = endDate.toISOString().slice(0, 10);
 
   const [{ data: contracts, error: cErr }, { data: shifts, error: sErr }, { data: sites }] = await Promise.all([
-    ctx.user.from('contracts').select('id, client_id, monthly_value_cad, status').eq('status', 'active'),
+    ctx.user.from('contracts').select('id, client_id, monthly_value_cad, pricing_schedule, status').eq('status', 'active'),
     ctx.user.from('shifts').select('id, site_id, hours_worked, bill_rate, status')
       .eq('status', 'completed')
       .gte('actual_start', startDate.toISOString())
@@ -96,7 +96,21 @@ Deno.serve(async (req) => {
     const slot = hoursByClient.get(c.client_id);
     let subtotal = slot?.subtotal ?? 0;
     let line_items: Array<Record<string, unknown>> = slot?.lines ?? [];
-    if (subtotal === 0 && c.monthly_value_cad) {
+
+    // Seasonal pricing — when a pricing_schedule is set, it overrides
+    // both monthly_value_cad and any t&m hours for that period.
+    const sched = (c as any).pricing_schedule as
+      | { kind: 'seasonal' | 'flat'; schedule?: Array<{ label: string; months: number[]; monthly_cad: number; components?: Array<{ label: string; monthly_cad: number }> }> }
+      | null;
+    if (sched && sched.kind === 'seasonal' && sched.schedule) {
+      const m = startDate.getUTCMonth() + 1;
+      const matched = sched.schedule.find((s) => s.months.includes(m));
+      if (matched) {
+        subtotal = matched.monthly_cad;
+        line_items = (matched.components ?? [{ label: matched.label, monthly_cad: matched.monthly_cad }])
+          .map((comp) => ({ kind: 'seasonal_monthly', season: matched.label, label: comp.label, amount: comp.monthly_cad, contract_id: c.id }));
+      }
+    } else if (subtotal === 0 && c.monthly_value_cad) {
       subtotal = c.monthly_value_cad;
       line_items = [{ kind: 'fixed_monthly', amount: c.monthly_value_cad, contract_id: c.id }];
     }

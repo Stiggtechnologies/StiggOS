@@ -78,5 +78,11 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.asset-track]
+verify_jwt = false
+
+[functions.contract-kpi-snapshot]
+verify_jwt = true
+
+[functions.asset-track]
 # AirTag bridges — auth via ASSET_TRACK_TOKEN URL parameter.
 verify_jwt = false

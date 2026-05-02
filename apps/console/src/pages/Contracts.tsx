@@ -84,6 +84,15 @@ export function Contracts() {
     },
     { key: 'term', label: 'Term', render: (r) => <span className="text-xs text-slate-400">{fmtDate(r.start_date)} → {fmtDate(r.end_date)}</span> },
     { key: 'status', label: 'Status', render: (r) => <span className={`text-[10px] px-2 py-0.5 rounded ${statusBadge(r.status)}`}>{r.status}</span> },
+    {
+      key: 'actions', label: '',
+      render: (r) => (
+        <div className="flex items-center gap-2">
+          <a href={`/contracts/${r.id}`} className="text-xs text-blue-400 hover:underline" onClick={(e) => e.stopPropagation()}>dashboard →</a>
+          <button onClick={(e) => { e.stopPropagation(); setEdit(r); }} className="text-xs text-slate-400 hover:text-slate-200">edit</button>
+        </div>
+      ),
+    },
   ];
 
   return (
@@ -93,7 +102,7 @@ export function Contracts() {
         description="Service agreements with monthly recurring revenue. One contract may span multiple service lines."
         rows={rows} loading={loading} error={error} columns={columns} onRefresh={load}
         onCreate={{ label: 'New contract', onClick: () => setEdit({ status: 'draft', start_date: new Date().toISOString().slice(0,10), service_lines: [] }) }}
-        onRowClick={(r) => setEdit(r)}
+        onRowClick={(r) => { window.location.href = `/contracts/${r.id}`; }}
       />
       <Modal open={!!edit} onClose={() => setEdit(null)} title={edit?.id ? 'Edit contract' : 'New contract'}
         footer={<>
