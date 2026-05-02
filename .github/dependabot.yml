@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule: { interval: "weekly", day: "monday" }
+    open-pull-requests-limit: 5
+    groups:
+      eslint-and-types:
+        patterns: ["@types/*", "eslint*", "@typescript-eslint/*"]
+      react:
+        patterns: ["react*", "@vitejs/plugin-react"]
+      tailwind:
+        patterns: ["tailwindcss*", "postcss*", "autoprefixer"]
+      supabase:
+        patterns: ["@supabase/*", "supabase"]
+      vitest-and-playwright:
+        patterns: ["vitest*", "@playwright/*"]
+    ignore:
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule: { interval: "weekly" }

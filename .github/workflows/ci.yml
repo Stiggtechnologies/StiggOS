@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, "os-v2-*"]
   pull_request:
     branches: [main]
 
@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   lint-typecheck:
-    name: lint + typecheck
+    name: typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,26 +22,17 @@ jobs:
       - run: npm run typecheck
 
   unit:
-    name: unit tests
+    name: unit tests (vitest)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20', cache: 'npm' }
       - run: npm ci
-      - run: npm test --workspaces --if-present
-
-  ai-eval:
-    name: AI eval (mock provider)
-    runs-on: ubuntu-latest
-    env:
-      AI_PROVIDER: mock
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: '20', cache: 'npm' }
-      - run: npm ci
+      - run: npm test
       - run: npm run ai:eval
+        env:
+          AI_FORCE_MOCK: '1'
 
   e2e:
     name: e2e smoke (Playwright)
@@ -54,8 +45,17 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
 
+  edge-functions:
+    name: edge function tests (Deno)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v1
+        with: { deno-version: 'v1.x' }
+      - run: deno test -A supabase/functions/_shared/llm.test.ts
+
   db-validate:
-    name: validate migrations
+    name: validate migrations + RLS
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -67,14 +67,13 @@ jobs:
         options: >-
           --health-cmd "pg_isready -U postgres"
           --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
     steps:
       - uses: actions/checkout@v4
-      - name: Apply migrations
-        env:
-          PGPASSWORD: postgres
+      - name: Install pgvector + pgtap
         run: |
-          psql -h localhost -U postgres -d postgres -c "CREATE EXTENSION IF NOT EXISTS vector;"
-          for f in supabase/migrations/0001_foundation.sql supabase/migrations/0003_audit.sql supabase/migrations/0004_seed_dev.sql; do
-            echo "Applying $f"
-            psql -h localhost -U postgres -d postgres -v ON_ERROR_STOP=1 -f "$f"
-          done
+          sudo apt-get update
+          sudo apt-get install -y postgresql-16-pgvector postgresql-16-pgtap
+      - name: Run RLS test suite
+        run: bash supabase/tests/run.sh

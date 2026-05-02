@@ -1,0 +1,40 @@
+name: Bug report
+description: Something doesn't work right.
+title: "[bug] "
+labels: [bug, needs-triage]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: A short, factual description.
+    validations: { required: true }
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to happen?
+    validations: { required: true }
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to …
+        2. Click …
+        3. See error
+    validations: { required: true }
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where did it happen?
+      options: [console, client-portal, guard-mobile, monitoring, edge-function, schema/migration, AI agent, other]
+    validations: { required: true }
+  - type: textarea
+    id: env
+    attributes:
+      label: Env
+      description: Browser, OS, deploy (local / staging / prod).
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots

@@ -26,6 +26,7 @@ additional_redirect_urls = [
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:5175",
+  "http://localhost:5176",
 ]
 jwt_expiry = 3600
 enable_signup = false
@@ -54,3 +55,13 @@ verify_jwt = true
 
 [functions.sales-assessment]
 verify_jwt = true
+
+[functions.billing-run]
+verify_jwt = true
+
+[functions.invoice-pdf]
+verify_jwt = true
+
+[functions.stripe-webhook]
+# Stripe signs the request itself; no Supabase JWT.
+verify_jwt = false

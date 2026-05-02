@@ -1,0 +1,24 @@
+# fly.io config for the console. Edit `app` to your project name and run:
+#   fly launch --copy-config --no-deploy
+#   fly secrets set VITE_SUPABASE_URL=… VITE_SUPABASE_ANON_KEY=…
+#   fly deploy --dockerfile infra/docker/console.Dockerfile
+
+app = "stigg-os-console"
+primary_region = "yyc"             # Calgary
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+[build]
+  dockerfile = "infra/docker/console.Dockerfile"
+
+[http_service]
+  internal_port = 80
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"

@@ -9,10 +9,23 @@ import { AIIntelligence } from './pages/AIIntelligence';
 import { Scheduling } from './pages/Scheduling';
 import { Compliance } from './pages/Compliance';
 import { ForensicSearch } from './pages/ForensicSearch';
-import { Placeholder } from './pages/Placeholder';
+import { Guards } from './pages/Guards';
+import { Sites } from './pages/Sites';
+import { Clients } from './pages/Clients';
+import { Contracts } from './pages/Contracts';
+import { Invoices } from './pages/Invoices';
+import { AuditLog } from './pages/AuditLog';
+import { Settings } from './pages/Settings';
+import { SalesPipeline } from './pages/SalesPipeline';
+import { Patrols } from './pages/Patrols';
+import { EquipmentAssets } from './pages/EquipmentAssets';
+import { ITCyber } from './pages/ITCyber';
+import { SecureTransport } from './pages/SecureTransport';
+import { Messages } from './pages/Messages';
 
 const STAFF = ['owner','admin','manager','dispatcher','supervisor','guard'] as const;
 const MGR   = ['owner','admin','manager'] as const;
+const ADMIN = ['owner','admin'] as const;
 
 export default function App() {
   return (
@@ -30,20 +43,24 @@ export default function App() {
       <Route path="/scheduling" element={<ProtectedRoute allowed={[...MGR, 'dispatcher']}><Layout><Scheduling /></Layout></ProtectedRoute>} />
       <Route path="/compliance" element={<ProtectedRoute allowed={[...MGR]}><Layout><Compliance /></Layout></ProtectedRoute>} />
 
-      {/* Stubs — same shape, different copy. Replaced as we extend. */}
-      <Route path="/guards"      element={<ProtectedRoute allowed={[...STAFF]}><Layout><Placeholder title="Guards" /></Layout></ProtectedRoute>} />
-      <Route path="/sites"       element={<ProtectedRoute allowed={[...STAFF]}><Layout><Placeholder title="Sites & Posts" /></Layout></ProtectedRoute>} />
-      <Route path="/patrols"     element={<ProtectedRoute allowed={[...STAFF]}><Layout><Placeholder title="Patrols" /></Layout></ProtectedRoute>} />
-      <Route path="/monitoring"  element={<ProtectedRoute allowed={[...STAFF]}><Layout><Placeholder title="Virtual Guarding" /></Layout></ProtectedRoute>} />
-      <Route path="/transport"   element={<ProtectedRoute allowed={[...STAFF]}><Layout><Placeholder title="Secure Transport" /></Layout></ProtectedRoute>} />
-      <Route path="/it"          element={<ProtectedRoute allowed={[...STAFF]}><Layout><Placeholder title="IT & Cyber" /></Layout></ProtectedRoute>} />
-      <Route path="/clients"     element={<ProtectedRoute allowed={[...MGR]}><Layout><Placeholder title="Clients" /></Layout></ProtectedRoute>} />
-      <Route path="/leads"       element={<ProtectedRoute allowed={[...MGR]}><Layout><Placeholder title="Sales Pipeline" /></Layout></ProtectedRoute>} />
-      <Route path="/contracts"   element={<ProtectedRoute allowed={[...MGR]}><Layout><Placeholder title="Contracts" /></Layout></ProtectedRoute>} />
-      <Route path="/invoices"    element={<ProtectedRoute allowed={[...MGR]}><Layout><Placeholder title="Invoices" /></Layout></ProtectedRoute>} />
-      <Route path="/audit"       element={<ProtectedRoute allowed={[...MGR]}><Layout><Placeholder title="Audit Log" /></Layout></ProtectedRoute>} />
-      <Route path="/messages"    element={<ProtectedRoute allowed={[...STAFF]}><Layout><Placeholder title="Messages" /></Layout></ProtectedRoute>} />
-      <Route path="/settings"    element={<ProtectedRoute allowed={[...MGR]}><Layout><Placeholder title="Settings" /></Layout></ProtectedRoute>} />
+      <Route path="/guards"      element={<ProtectedRoute allowed={[...MGR, 'supervisor']}><Layout><Guards /></Layout></ProtectedRoute>} />
+      <Route path="/sites"       element={<ProtectedRoute allowed={[...MGR, 'supervisor']}><Layout><Sites /></Layout></ProtectedRoute>} />
+      <Route path="/patrols"     element={<ProtectedRoute allowed={[...STAFF]}><Layout><Patrols /></Layout></ProtectedRoute>} />
+      <Route path="/transport"   element={<ProtectedRoute allowed={[...STAFF]}><Layout><SecureTransport /></Layout></ProtectedRoute>} />
+      <Route path="/equipment-assets" element={<ProtectedRoute allowed={[...STAFF]}><Layout><EquipmentAssets /></Layout></ProtectedRoute>} />
+      <Route path="/it"          element={<ProtectedRoute allowed={[...MGR, 'it_tech']}><Layout><ITCyber /></Layout></ProtectedRoute>} />
+
+      <Route path="/clients"     element={<ProtectedRoute allowed={[...MGR]}><Layout><Clients /></Layout></ProtectedRoute>} />
+      <Route path="/leads"       element={<ProtectedRoute allowed={[...MGR]}><Layout><SalesPipeline /></Layout></ProtectedRoute>} />
+      <Route path="/contracts"   element={<ProtectedRoute allowed={[...MGR]}><Layout><Contracts /></Layout></ProtectedRoute>} />
+      <Route path="/invoices"    element={<ProtectedRoute allowed={[...MGR]}><Layout><Invoices /></Layout></ProtectedRoute>} />
+
+      <Route path="/audit"       element={<ProtectedRoute allowed={[...ADMIN]}><Layout><AuditLog /></Layout></ProtectedRoute>} />
+      <Route path="/messages"    element={<ProtectedRoute allowed={[...STAFF]}><Layout><Messages /></Layout></ProtectedRoute>} />
+      <Route path="/settings"    element={<ProtectedRoute allowed={[...ADMIN]}><Layout><Settings /></Layout></ProtectedRoute>} />
+
+      {/* Monitoring is its own app — the console links out via the Layout sidebar. */}
+      <Route path="/monitoring" element={<Navigate to="/" replace />} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

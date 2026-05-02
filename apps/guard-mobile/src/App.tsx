@@ -17,10 +17,15 @@ export function App() {
     supabase.auth.getSession().then(({ data }) => setSignedIn(!!data.session));
     const sub = supabase.auth.onAuthStateChange((_e, s) => setSignedIn(!!s));
     const onUp = () => setOnline(true), onDown = () => setOnline(false);
-    window.addEventListener('online', onUp); window.addEventListener('offline', onDown);
+    const onReplay = () => setOnline(navigator.onLine);   // SW signal — re-trigger the replay effect.
+    window.addEventListener('online', onUp);
+    window.addEventListener('offline', onDown);
+    window.addEventListener('stigg:replay', onReplay);
     return () => {
       sub.data.subscription.unsubscribe();
-      window.removeEventListener('online', onUp); window.removeEventListener('offline', onDown);
+      window.removeEventListener('online', onUp);
+      window.removeEventListener('offline', onDown);
+      window.removeEventListener('stigg:replay', onReplay);
     };
   }, []);
 

@@ -1,0 +1,45 @@
+# Local production-like deploy of every static surface. Stack:
+#   :8080 console
+#   :8081 client-portal
+#   :8082 guard-mobile
+#   :8083 monitoring
+#
+# Supabase + Postgres run elsewhere (managed Supabase or another compose);
+# the apps consume their public URL via VITE_SUPABASE_URL build args.
+
+services:
+  console:
+    build:
+      context: ../..
+      dockerfile: infra/docker/console.Dockerfile
+    ports: ["8080:80"]
+    environment:
+      VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+      VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+
+  client-portal:
+    build:
+      context: ../..
+      dockerfile: infra/docker/client-portal.Dockerfile
+    ports: ["8081:80"]
+    environment:
+      VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+      VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+
+  guard-mobile:
+    build:
+      context: ../..
+      dockerfile: infra/docker/guard-mobile.Dockerfile
+    ports: ["8082:80"]
+    environment:
+      VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+      VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+
+  monitoring:
+    build:
+      context: ../..
+      dockerfile: infra/docker/monitoring.Dockerfile
+    ports: ["8083:80"]
+    environment:
+      VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+      VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}

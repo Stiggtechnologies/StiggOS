@@ -1,0 +1,21 @@
+name: Feature request
+description: Something that should exist.
+title: "[feat] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What gap does this fill? Who feels it?
+    validations: { required: true }
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations: { required: true }
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options: ["small (< 1d)", "medium (1–5d)", "large (1–2 wk)", "epic (2+ wk)"]

@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
+    "setup": "bash scripts/setup.sh",
     "dev": "npm run dev --workspaces --if-present",
     "dev:console": "npm run dev -w @stigg/console",
     "dev:portal": "npm run dev -w @stigg/client-portal",
@@ -16,11 +17,16 @@
     "build": "npm run build --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "test:rls": "bash supabase/tests/run.sh",
+    "test:functions": "deno test -A supabase/functions/_shared/llm.test.ts",
     "db:migrate": "supabase db push",
     "db:reset": "supabase db reset",
-    "db:seed": "tsx packages/db/seed.ts",
+    "db:types": "bash scripts/gen-types.sh",
+    "seed:org": "tsx scripts/seed-org.ts",
+    "import:csv": "tsx scripts/import-csv.ts",
     "ai:eval": "tsx packages/ai/evals/run.ts"
   },
   "devDependencies": {
@@ -28,7 +34,8 @@
     "@types/node": "^22.7.0",
     "supabase": "^1.207.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
   },
   "engines": {
     "node": ">=20.0.0"

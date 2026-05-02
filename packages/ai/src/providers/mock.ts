@@ -11,11 +11,25 @@ export function makeMock(): Provider {
       const sys = req.system.map((s) => s.text).join('\n');
       const lastUser = lastUserText(req.messages).toLowerCase();
 
-      if (sys.includes('Incident Copilot') || lastUser.includes('incident')) return mockIncident(req, lastUser);
-      if (sys.includes('Schedule Agent')   || lastUser.includes('schedule')) return mockSchedule();
-      if (sys.includes('Compliance Co-pilot') || lastUser.includes('compliance')) return mockCompliance();
-      if (sys.includes('Forensic Search')  || lastUser.includes('search'))   return mockForensic(lastUser);
-      if (sys.includes('Sales Assessment') || lastUser.includes('assessment'))return mockSales();
+      // Multi-turn termination: if we've already emitted a tool call and the
+      // harness has fed back a tool_result, we should now return end_turn text.
+      const alreadyToolCalled = req.messages.some(
+        (m) => m.role === 'tool' || m.content.some((b) => b.type === 'tool_result'),
+      );
+      if (alreadyToolCalled) return text('Done.');
+
+      // The system prompt is the load-bearing signal — always check it first.
+      // User-message keyword matches are the fallback for surfaces that omit it.
+      if (sys.includes('Incident Copilot'))       return mockIncident(req, lastUser);
+      if (sys.includes('Schedule Agent'))         return mockSchedule();
+      if (sys.includes('Compliance Co-pilot'))    return mockCompliance();
+      if (sys.includes('Forensic Search'))        return mockForensic(lastUser);
+      if (sys.includes('Sales Assessment'))       return mockSales();
+      if (lastUser.includes('incident'))          return mockIncident(req, lastUser);
+      if (lastUser.includes('schedule'))          return mockSchedule();
+      if (lastUser.includes('compliance'))        return mockCompliance();
+      if (lastUser.includes('forensic') || lastUser.includes('search')) return mockForensic(lastUser);
+      if (lastUser.includes('assessment'))        return mockSales();
       return text(`(mock provider) Echo for ${req.model}.`);
     },
   };

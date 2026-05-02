@@ -1,0 +1,18 @@
+# CODEOWNERS — auto-request reviews. Replace placeholders with real GitHub users
+# before merging os-v2-rebuild to main.
+#
+# Last matching pattern wins.
+
+*                                @Stiggtechnologies/owners
+
+# Domain experts
+/supabase/migrations/             @Stiggtechnologies/owners
+/supabase/functions/              @Stiggtechnologies/owners
+/packages/ai/                     @Stiggtechnologies/owners
+/packages/compliance/             @Stiggtechnologies/owners
+/apps/console/                    @Stiggtechnologies/owners
+/apps/client-portal/              @Stiggtechnologies/owners
+/apps/guard-mobile/               @Stiggtechnologies/owners
+/apps/monitoring/                 @Stiggtechnologies/owners
+/docs/                            @Stiggtechnologies/owners
+/.github/                         @Stiggtechnologies/owners
