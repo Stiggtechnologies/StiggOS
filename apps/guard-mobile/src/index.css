@@ -3,4 +3,62 @@
 @tailwind utilities;
 
 html, body, #root { height: 100%; }
-body { @apply antialiased; -webkit-tap-highlight-color: transparent; }
+body {
+  @apply antialiased font-sans bg-ink-950 text-ink-50;
+  -webkit-tap-highlight-color: transparent;
+  background: radial-gradient(at 50% -10%, rgb(214 31 43 / 0.15) 0px, transparent 40%),
+              linear-gradient(180deg, #05060a 0%, #0b0e16 100%);
+  background-attachment: fixed;
+}
+
+@layer components {
+  .field-card {
+    @apply rounded-2xl border border-white/[0.06] bg-white/[0.03] p-5;
+    backdrop-filter: saturate(140%) blur(14px);
+  }
+  .field-btn-primary {
+    @apply w-full py-4 rounded-2xl font-semibold text-white text-base transition-all duration-150 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;
+    background: linear-gradient(135deg, #ed3947 0%, #d61f2b 100%);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.18) inset, 0 8px 24px -8px rgb(214 31 43 / 0.6);
+  }
+  .field-btn-ghost {
+    @apply w-full py-4 rounded-2xl font-medium text-ink-200 transition-all duration-150 active:scale-[0.98];
+    background: rgb(255 255 255 / 0.04);
+    border: 1px solid rgb(255 255 255 / 0.08);
+  }
+  .field-input {
+    @apply w-full px-3.5 py-3 rounded-xl text-base text-white placeholder:text-ink-500
+           bg-white/[0.04] border border-white/[0.08] outline-none transition-all duration-150
+           focus:border-stigg-500/50 focus:bg-white/[0.06] focus:ring-2 focus:ring-stigg-500/20;
+  }
+  .field-textarea {
+    @apply w-full px-3.5 py-3 rounded-xl text-base text-white placeholder:text-ink-500
+           bg-white/[0.04] border border-white/[0.08] outline-none transition-all duration-150
+           focus:border-stigg-500/50 focus:bg-white/[0.06] focus:ring-2 focus:ring-stigg-500/20
+           resize-none;
+  }
+  .field-chip {
+    @apply text-[11px] px-2.5 py-1.5 rounded-full border transition-colors duration-150;
+  }
+  .field-chip-active {
+    @apply bg-stigg-500/15 border-stigg-500/40 text-stigg-200;
+  }
+  .field-chip-idle {
+    @apply border-white/[0.08] text-ink-300 hover:text-white hover:border-white/15;
+  }
+  .field-h1 {
+    @apply text-[44px] leading-[0.95] font-bold tracking-tightest;
+  }
+  .field-h2 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  .field-eyebrow {
+    @apply text-[10px] uppercase tracking-[0.18em] text-ink-500 font-medium;
+  }
+}
+
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 2.4s linear infinite;
+  }
+}

@@ -27,6 +27,7 @@
     "db:types": "bash scripts/gen-types.sh",
     "seed:org": "tsx scripts/seed-org.ts",
     "seed:northview": "tsx scripts/seed-northview.ts",
+    "seed:checkpoints": "tsx scripts/seed-checkpoints.ts",
     "import:csv": "tsx scripts/import-csv.ts",
     "ai:eval": "tsx packages/ai/evals/run.ts"
   },

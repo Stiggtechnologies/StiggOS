@@ -8,4 +8,5 @@ export default defineWorkspace([
   'packages/dispatch',
   'packages/integrations',
   'packages/scheduling',
+  'apps/guard-mobile',
 ]);

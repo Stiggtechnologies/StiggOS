@@ -19,10 +19,12 @@ psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE TABLE IF NOT EXISTS auth.user
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "CREATE OR REPLACE FUNCTION auth.uid() RETURNS UUID AS \$\$ SELECT current_setting('request.jwt.claim.sub', true)::UUID \$\$ LANGUAGE SQL STABLE;"
 
 echo "→ applying migrations"
-for f in "$ROOT"/supabase/migrations/0001_foundation.sql "$ROOT"/supabase/migrations/0002_rls.sql "$ROOT"/supabase/migrations/0003_audit.sql; do
+for f in "$ROOT"/supabase/migrations/0001_foundation.sql "$ROOT"/supabase/migrations/0002_rls.sql "$ROOT"/supabase/migrations/0003_audit.sql "$ROOT"/supabase/migrations/0025_patrol_nfc.sql "$ROOT"/supabase/migrations/0026_patrol_phase2.sql; do
   echo "  $f"
   psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$f" >/dev/null
 done
 
 echo "→ running pgTAP tests"
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$ROOT/supabase/tests/0001_rls.test.sql"
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$ROOT/supabase/tests/0002_patrol_nfc.test.sql"
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$ROOT/supabase/tests/0003_patrol_phase2.test.sql"
