@@ -51,7 +51,7 @@ export function Ask() {
 
       <div className="flex flex-wrap gap-2 text-xs">
         {SUGGESTIONS.map((s) => (
-          <button key={s} onClick={() => setQ(s)} className="px-3 py-1 rounded border border-slate-200 hover:bg-slate-100">
+          <button key={s} onClick={() => setQ(s)} className="px-3 py-1 rounded border border-slate-200 hover:bg-stigg-600/10 hover:border-stigg-500/50 hover:shadow-[0_0_0_3px_rgba(214,31,43,0.18)] transition-all">
             {s}
           </button>
         ))}

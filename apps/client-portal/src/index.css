@@ -2,9 +2,236 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ────────────────────────────────────────────────────────────────────
+   Stigg Client Portal — same design system as the Console.
+   Dark-only. Plain `bg-ink-950` body. Glass sidebar via backdrop-blur.
+   Premium comes from restraint, not gradients.
+   ──────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  body {
+    @apply font-sans antialiased bg-ink-950 text-ink-50;
+    font-feature-settings: 'cv11', 'ss01', 'ss03', 'tnum';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Custom scrollbar — invisible track, soft thumb */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 0.08);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover { background-color: rgb(255 255 255 / 0.16); background-clip: padding-box; }
+
+  ::selection { background: rgb(214 31 43 / 0.35); color: white; }
+
+  h1, h2, h3 { @apply text-white; letter-spacing: -0.02em; }
+  h1 { letter-spacing: -0.025em; }
+
+  /* (overrides moved to dedicated layer below — see end of file) */
+}
+
 @layer components {
-  .card { @apply rounded-lg border border-slate-200 bg-white p-6 shadow-sm; }
-  .input { @apply w-full px-3 py-2 rounded border border-slate-300 focus:outline-none focus:border-blue-500; }
-  .btn-primary { @apply px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white font-medium; }
-  .btn-ghost { @apply px-4 py-2 rounded border border-slate-300 hover:bg-slate-100 text-slate-700; }
+  /* ────────── Cards — copy console's exact classes ────────── */
+  .card        { @apply rounded-lg border border-slate-800 bg-slate-900/60 p-6; }
+  .card-tight  { @apply rounded-lg border border-slate-800 bg-slate-900/60 p-4; }
+
+  /* ────────── Inputs — copy console ────────── */
+  .input {
+    @apply w-full px-3 py-2 rounded bg-slate-900 border border-slate-700 text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-stigg-500;
+  }
+
+  /* ────────── Buttons — copy console (Stigg red as primary, not blue) ────────── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded bg-stigg-600 hover:bg-stigg-700 text-white font-medium transition-colors;
+    @apply disabled:opacity-50 disabled:cursor-wait;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded border border-slate-700 hover:bg-slate-800 text-slate-200 transition-colors;
+  }
+  .btn-danger {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-white font-medium transition-colors;
+  }
+  .btn-sm-primary {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded bg-stigg-600 hover:bg-stigg-700 text-white font-medium transition-colors;
+  }
+  .btn-sm-ghost {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded border border-slate-700 hover:bg-slate-800 text-slate-200 transition-colors;
+  }
+
+  /* ────────── Typography (page chrome) ────────── */
+  .page-title    { @apply text-2xl font-semibold tracking-tightest text-white; letter-spacing: -0.025em; }
+  .page-subtitle { @apply text-sm mt-1 text-ink-400 leading-relaxed max-w-2xl; }
+  .section-label { @apply text-[10px] uppercase tracking-[0.18em] font-semibold text-ink-500; }
+  .stat-value    { @apply text-3xl font-bold tracking-tightest tabular-nums text-white; letter-spacing: -0.04em; }
+  .stat-label    { @apply text-[10px] uppercase tracking-[0.18em] font-semibold text-ink-500; }
+
+  /* ────────── Status chips ────────── */
+  .chip-ok   { @apply inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30; }
+  .chip-warn { @apply inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-200 border border-amber-500/30; }
+  .chip-crit { @apply inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-500/15 text-red-300 border border-red-500/30; }
+  .chip-info { @apply inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-300 border border-blue-500/30; }
+  .chip-mute { @apply inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/[0.04] text-ink-300 border border-white/[0.06]; }
+}
+
+@layer utilities {
+  .anim-fade-up { animation: fade-up 0.4s cubic-bezier(0.19, 1, 0.22, 1) both; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ────────────────────────────────────────────────────────────────────
+   FORCED dark-mode remap of every legacy light-only utility class.
+   Loaded AFTER @tailwind utilities so source order wins; !important
+   guarantees we beat any layer / specificity edge case. The portal
+   is dark-only so this is the right hammer.
+   ──────────────────────────────────────────────────────────────────── */
+
+/* Ink + slate text scales → light */
+.text-ink-900   { color: #ffffff !important; }
+.text-ink-800   { color: #f4f6fa !important; }
+.text-ink-700   { color: #e3e7ef !important; }
+.text-ink-600   { color: #cdd3df !important; }
+.text-ink-500   { color: #9aa3b6 !important; }
+.text-ink-400   { color: #6b7388 !important; }
+.text-ink-200   { color: #cdd3df !important; }
+.text-slate-900 { color: #ffffff !important; }
+.text-slate-800 { color: #f4f6fa !important; }
+.text-slate-700 { color: #e3e7ef !important; }
+.text-slate-600 { color: #cdd3df !important; }
+.text-slate-500 { color: #9aa3b6 !important; }
+.text-slate-400 { color: #6b7388 !important; }
+
+/* White / pale tile backgrounds → dark glass */
+.bg-white     { background-color: rgb(255 255 255 / 0.03) !important; }
+.bg-ink-50    { background-color: rgb(255 255 255 / 0.02) !important; }
+.bg-ink-100   { background-color: rgb(255 255 255 / 0.04) !important; }
+.bg-slate-50  { background-color: rgb(255 255 255 / 0.02) !important; }
+.bg-slate-100 { background-color: rgb(255 255 255 / 0.04) !important; }
+
+/* Pale borders → faint white */
+.border-white     { border-color: rgb(255 255 255 / 0.10) !important; }
+.border-ink-100   { border-color: rgb(255 255 255 / 0.04) !important; }
+.border-ink-200   { border-color: rgb(255 255 255 / 0.06) !important; }
+.border-ink-300   { border-color: rgb(255 255 255 / 0.10) !important; }
+.border-slate-100 { border-color: rgb(255 255 255 / 0.04) !important; }
+.border-slate-200 { border-color: rgb(255 255 255 / 0.06) !important; }
+
+/* Stigg-tinted */
+.bg-stigg-50      { background-color: rgb(214 31 43 / 0.10) !important; }
+.border-stigg-200 { border-color: rgb(214 31 43 / 0.25) !important; }
+.border-stigg-300 { border-color: rgb(214 31 43 / 0.35) !important; }
+.text-stigg-700   { color: #fc9aa3 !important; }
+.text-stigg-600   { color: #fa6571 !important; }
+
+/* Semantic alert tile remaps */
+.bg-red-50      { background-color: rgb(239 68 68 / 0.10) !important; }
+.border-red-200 { border-color: rgb(239 68 68 / 0.30) !important; }
+.border-red-300 { border-color: rgb(239 68 68 / 0.40) !important; }
+.text-red-800   { color: rgb(252 165 165) !important; }
+.text-red-700   { color: rgb(252 165 165) !important; }
+.text-red-600   { color: rgb(248 113 113) !important; }
+
+.bg-emerald-50      { background-color: rgb(16 185 129 / 0.10) !important; }
+.bg-emerald-100     { background-color: rgb(16 185 129 / 0.10) !important; }
+.border-emerald-200 { border-color: rgb(16 185 129 / 0.30) !important; }
+.border-emerald-300 { border-color: rgb(16 185 129 / 0.40) !important; }
+.text-emerald-700   { color: rgb(110 231 183) !important; }
+.text-emerald-600   { color: rgb(52 211 153) !important; }
+.text-emerald-500   { color: rgb(52 211 153) !important; }
+
+.bg-amber-50      { background-color: rgb(245 158 11 / 0.10) !important; }
+.bg-amber-100     { background-color: rgb(245 158 11 / 0.10) !important; }
+.border-amber-200 { border-color: rgb(245 158 11 / 0.30) !important; }
+.text-amber-800   { color: rgb(252 211 77) !important; }
+.text-amber-700   { color: rgb(252 211 77) !important; }
+
+.bg-blue-50      { background-color: rgb(59 130 246 / 0.10) !important; }
+.bg-blue-100     { background-color: rgb(59 130 246 / 0.10) !important; }
+.bg-blue-200     { background-color: rgb(59 130 246 / 0.15) !important; }
+.border-blue-200 { border-color: rgb(59 130 246 / 0.30) !important; }
+.text-blue-700   { color: rgb(147 197 253) !important; }
+.text-blue-600   { color: rgb(96 165 250) !important; }
+
+.bg-sky-50      { background-color: rgb(14 165 233 / 0.10) !important; }
+.bg-sky-100     { background-color: rgb(14 165 233 / 0.10) !important; }
+.border-sky-200 { border-color: rgb(14 165 233 / 0.30) !important; }
+.text-sky-700   { color: rgb(125 211 252) !important; }
+
+.bg-orange-50      { background-color: rgb(249 115 22 / 0.10) !important; }
+.bg-orange-100     { background-color: rgb(249 115 22 / 0.10) !important; }
+.border-orange-200 { border-color: rgb(249 115 22 / 0.30) !important; }
+.text-orange-700   { color: rgb(253 186 116) !important; }
+
+/* Hover overrides */
+.hover\:bg-ink-50:hover    { background-color: rgb(255 255 255 / 0.04) !important; }
+.hover\:bg-ink-100:hover   { background-color: rgb(255 255 255 / 0.06) !important; }
+.hover\:bg-slate-50:hover  { background-color: rgb(255 255 255 / 0.04) !important; }
+.hover\:bg-stigg-100:hover { background-color: rgb(214 31 43 / 0.15) !important; }
+.hover\:text-ink-900:hover { color: #ffffff !important; }
+.hover\:text-stigg-600:hover { color: #fc9aa3 !important; }
+
+/* Gradient stops — Tailwind sets --tw-gradient-from/to/via via these
+   classes. Override them so any from-/via-/to-{white|stigg-50|blue-50|etc.}
+   doesn't paint a near-white gradient over a dark card. */
+.from-white   { --tw-gradient-from: rgb(255 255 255 / 0.04) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(255 255 255 / 0)) !important; }
+.via-white    { --tw-gradient-via: rgb(255 255 255 / 0.04) !important; --tw-gradient-stops: var(--tw-gradient-from, rgb(255 255 255 / 0)), var(--tw-gradient-via), var(--tw-gradient-to, rgb(255 255 255 / 0)) !important; }
+.to-white     { --tw-gradient-to: rgb(255 255 255 / 0.04) !important; }
+.from-stigg-50 { --tw-gradient-from: rgb(214 31 43 / 0.10) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(214 31 43 / 0)) !important; }
+.via-stigg-50  { --tw-gradient-via: rgb(214 31 43 / 0.10) !important; }
+.to-stigg-50   { --tw-gradient-to: rgb(214 31 43 / 0.10) !important; }
+.from-blue-50  { --tw-gradient-from: rgb(59 130 246 / 0.08) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(59 130 246 / 0)) !important; }
+.via-blue-50   { --tw-gradient-via: rgb(59 130 246 / 0.08) !important; }
+.to-blue-50    { --tw-gradient-to: rgb(59 130 246 / 0.08) !important; }
+.from-ink-50   { --tw-gradient-from: rgb(255 255 255 / 0.04) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(255 255 255 / 0)) !important; }
+.to-ink-50     { --tw-gradient-to: rgb(255 255 255 / 0.04) !important; }
+
+/* ────────────────────────────────────────────────────────────────────
+   MapLibre — dark popups + dimmed attribution. Default popups are
+   white-on-white, which clashes hard with the dark basemap.
+   ──────────────────────────────────────────────────────────────────── */
+.maplibregl-popup.stigg-popup .maplibregl-popup-content {
+  background: rgb(10 12 18 / 0.92);
+  color: #e5e7eb;
+  border: 1px solid rgb(255 255 255 / 0.10);
+  border-radius: 8px;
+  backdrop-filter: blur(14px);
+  font: 13px Inter, system-ui, sans-serif;
+  padding: 10px 12px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.45);
+}
+.maplibregl-popup.stigg-popup.maplibregl-popup-anchor-bottom .maplibregl-popup-tip,
+.maplibregl-popup.stigg-popup.maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip,
+.maplibregl-popup.stigg-popup.maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip { border-top-color: rgb(10 12 18 / 0.92); }
+.maplibregl-popup.stigg-popup.maplibregl-popup-anchor-top .maplibregl-popup-tip,
+.maplibregl-popup.stigg-popup.maplibregl-popup-anchor-top-left .maplibregl-popup-tip,
+.maplibregl-popup.stigg-popup.maplibregl-popup-anchor-top-right .maplibregl-popup-tip { border-bottom-color: rgb(10 12 18 / 0.92); }
+.maplibregl-popup.stigg-popup.maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: rgb(10 12 18 / 0.92); }
+.maplibregl-popup.stigg-popup.maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: rgb(10 12 18 / 0.92); }
+.stigg-popup .popup-sub { color: #9aa3b6; font-size: 11px; }
+
+.maplibregl-ctrl-attrib {
+  background: rgb(10 12 18 / 0.7) !important;
+  color: #6b7388 !important;
+}
+.maplibregl-ctrl-attrib a { color: #9aa3b6 !important; }
+
+.maplibregl-ctrl-group {
+  background: rgb(10 12 18 / 0.85) !important;
+  border: 1px solid rgb(255 255 255 / 0.08) !important;
+}
+.maplibregl-ctrl-group button {
+  background-color: transparent !important;
+}
+.maplibregl-ctrl-group button:hover {
+  background-color: rgb(255 255 255 / 0.06) !important;
+}
+.maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+  filter: invert(0.85);
 }
