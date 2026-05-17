@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd ../.. && npm install && npm run build -w @stigg/console",
+  "buildCommand": "cd ../.. && npm install && cd apps/console && npx vite build",
   "outputDirectory": "dist",
   "installCommand": "echo skipped — handled by buildCommand",
   "framework": "vite",
