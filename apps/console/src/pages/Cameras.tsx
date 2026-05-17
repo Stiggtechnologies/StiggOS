@@ -9,7 +9,7 @@ interface CameraRow {
   id: string; org_id: string; site_id: string;
   nvr_system_id: string | null;
   channel_no: number | null;
-  label: string;
+  label: string
   ai_features: string[];
   online: boolean;
   last_seen_at: string | null;
@@ -236,7 +236,7 @@ function SchedulesTab() {
             <div>
               <p className="text-sm text-slate-400 mb-1">spec (JSON)</p>
               <textarea className="input font-mono text-xs h-48" value={json} onChange={(e) => setJson(e.target.value)} />
-              <p className="text-xs text-slate-500 mt-1">days = ISO weekdays 1..7 (Mon..Sun). Times in 24h "HH:MM". Overnight windows allowed (start > end).</p>
+              <p className="text-xs text-slate-500 mt-1">days = ISO weekdays 1..7 (Mon..Sun). Times in 24h "HH:MM". Overnight windows allowed (start {'>'} end).</p>
             </div>
           </form>
         )}
