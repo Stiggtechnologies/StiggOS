@@ -4,7 +4,7 @@
 
 import { supabase } from './supabase'
 
-const EDGE_FUNCTION_URL = 'https://optlghedswctsklcxlkn.supabase.co/functions/v1/send-sms'
+const EDGE_FUNCTION_URL = 'https://snlevbkyjipucmkpkqka.supabase.co/functions/v1/send-sms'
 
 type Company = 'aim' | 'stigg' | 'syncai'
 type Category = 'marketing' | 'alert' | 'reminder' | 'notification'
