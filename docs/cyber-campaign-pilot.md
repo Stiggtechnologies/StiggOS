@@ -9,3 +9,7 @@ The first slice is a development-only sandbox on the existing Sales Pipeline rou
 ## Staging and production gates
 
 Keep the existing CRM as the source of truth. Private staging must have verified organization-bound roles, server-side RLS tests, auditable approval and suppression state, a controlled import with row counts and mapping overrides, and reconciliation before real records are loaded. Development-only date arithmetic skips weekends but not statutory holidays; replace it with the agreed business calendar before scheduling. An approval is not a delivery: future outbound requires a verified provider, permission evidence, per-touch eligibility checks, idempotency persisted server-side, and tested stop and opt-out handling. Legal entities and channel permissions remain separate.
+
+## Company isolation preflight
+
+`supabase/staging/campaign_isolation_preflight.sql` is a separate, not-deployed, synthetic-only PostgreSQL preflight. It uses operator-provisioned membership, rejects real email addresses, and gives authenticated users tenant-isolated reads only. It is not wired to the app, never changes existing tables, does not prove the deployed database is isolated, and must not be run against production. Run `tests/campaign-isolation.test.mjs` with Node 24 and the PGlite test dependency from a disposable tool directory. The test compares two companies and verifies outsider, anonymous and write denials.
