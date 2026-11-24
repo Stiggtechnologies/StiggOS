@@ -1,4 +1,7 @@
+import { lazy, Suspense } from 'react'
 import { TrendingUp, Plus, ChevronRight, Clock, DollarSign } from 'lucide-react'
+
+const CampaignPilot = import.meta.env.DEV ? lazy(() => import('./CampaignPilot')) : null
 
 export function SalesPipeline() {
   const deals = [
@@ -58,6 +61,12 @@ export function SalesPipeline() {
           New Deal
         </button>
       </div>
+
+      {CampaignPilot && (
+        <Suspense fallback={<p>Loading sandbox…</p>}>
+          <CampaignPilot />
+        </Suspense>
+      )}
 
       {/* Pipeline Summary */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
